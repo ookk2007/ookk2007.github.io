@@ -333,6 +333,13 @@ tbody tr:nth-child(odd) th {
   margin-bottom: 4em;
 }
 
+.post p {
+  font-family: "42dot Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
 /* Blog post or page title */
 .page-title,
 .post-title,
