@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Github Pages(github.io) 만들기 (with Hydeout) - 1"
-date:   2025-03-29 19:19:23 +0900
+date:   2025-03-29 10:19:23 +0900
 categories: tutorial
 ---
 
