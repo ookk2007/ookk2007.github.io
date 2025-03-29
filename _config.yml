@@ -4,7 +4,7 @@ highlighter:      rouge
 
 # Setup
 title:            Archi-veD
-tagline:          ny Jonghyeok Han
+tagline:          by Jonghyeok Han
 description:      'An archive of my studies, dev logs, and tutorials.'
 url:              https://ookk2007.github.io
 baseurl:          ''
@@ -19,6 +19,7 @@ author:
   url:            https://github.com/ookk2007
 
 remote_theme: fongandrew/hydeout
+excerpt_separator: <!--more-->
 
 paginate:         5
 # paginate_path:    '/page:num'
