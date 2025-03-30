@@ -39,8 +39,8 @@ h2.page-title {
 }
 
 .posts-list {
-  list-style: none;
-  padding-left: 0;
+  list-style: disc;
+  padding-left: 10;
 
   h3 {
     margin-top: 0;
@@ -50,6 +50,10 @@ h2.page-title {
     color: #999;
     font-size: 75%;
     white-space: nowrap;
+  }
+
+  li a {
+    color: $gray-5;
   }
 
   li a:hover {
