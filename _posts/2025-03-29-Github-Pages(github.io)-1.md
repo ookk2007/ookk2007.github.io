@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Github Pages(github.io) 만들기 (with Hydeout) - 1"
-date:   2025-03-29 10:19:23 +0900
+title: Github Pages(github.io) 만들기 (with Hydeout) - 1
+date: '2025-03-29 10:19:23 +0900'
 categories: tutorial
 ---
 
@@ -9,7 +9,7 @@ categories: tutorial
 
 블로그를 만들고나서 처음으로 글을 써보고 있습니다. ㅎㅎ
 
-그래서 이번 포스팅에서는 'Github Pages로 블로그를 만드는 방법'에 대해서 다루어보고자 합니다.
+이번 포스팅에서는 'Github Pages로 블로그를 만드는 방법'에 대해서 다루어보고자 합니다.
 
 <!--more-->
 
@@ -109,7 +109,7 @@ Github Desktop을 실행하고 본인의 Github 계정으로 로그인하면, �
 
 이제 이 변경 사항을 Commit하고 Github Repository에 Push하여 웹사이트에 반영시켜보겠습니다.
 
-먼저, 아래 사진의 빨간색 네모 박스에 Commit Message(변경 사항을 요약하는 짧은 문장)을 적고, <strong>'Commit to main'</strong>을 클릭합니다.
+먼저, 아래 사진의 빨간색 네모 박스에 Commit Message(변경 사항을 요약하는 짧은 문장)를 적고, <strong>'Commit to main'</strong>을 클릭합니다.
 
 ![placehorder](/imgs/github8.JPG)
 
@@ -117,13 +117,15 @@ Github Desktop을 실행하고 본인의 Github 계정으로 로그인하면, �
 
 ![placehorder](/imgs/github9.JPG)
 
-이 에러를 해결하기 위해서, 왼쪽 상단의 <strong>File -> Options...</strong>를 클릭해서 설정창에 들어갑니다.
+<details>
+  <summary>에러 해결 방법</summary>
 
-그리고 'Git' 옵션에 들어가서, Name과 Email에 {username}과 {github_id}를 입력하고, 'Save'를 누릅니다.
+  <p>이 에러를 해결하기 위해서, 왼쪽 상단의 <strong>File -> Options...</strong>를 클릭해서 설정창에 들어갑니다.<br>
+    그리고 'Git' 옵션에 들어가서, Name과 Email에 {username}과 {github_id}를 입력하고, 'Save'를 누릅니다.<br></p>
+  ![placehorder](/imgs/github10.JPG)
+</details>
 
-![placehorder](/imgs/github10.JPG)
-
-만약 에러 없이 Commit이 성공적으로 되었다면, 아래와 같이 'No local changes'라는 문구가 나오게 됩니다.
+Commit이 성공적으로 되었다면, 아래와 같이 'No local changes'라는 문구가 나오게 됩니다.
 
 여기서 'Push Origin' 버튼을 눌러, Github Repository에 변경 사항을 업로드해줍니다.
 
@@ -186,7 +188,7 @@ gem install bundler jekyll jekyll-gist jekyll-sitemap jekyll-seo-tag jekyll-pagi
 
 설치가 완료되면, Local Repository 내의 파일들을 전부 지워주세요.
 
-VSCode에서 'README.md'파일을 우클릭 후 “파일 탐색기에 표시”버튼을 누르면 쉽게 파일들을 지울 수 있습니다.
+VSCode에서 'README.md'파일을 우클릭 후 “파일 탐색기에 표시”버튼을 누르면, 파일 탐색기로 쉽게 파일들을 지울 수 있습니다.
 
 <strong>(이때, '.git' 폴더는 지우시면 안 됩니다!!)</strong>
 
@@ -210,7 +212,8 @@ jekyll new ./
   <p>사실 Jekyll에서 사용할 수 있는 테마는 무수히 많고, Hydeout은 그렇게 인기 있는 테마는 아닙니다.<br>
   저도 처음에는 가장 보편적인 Chirpy 테마와, 애니메이션이 풍부한 Hydejack 테마 중 고민을 했습니다.<br>
   그런데 제 기준에서 두 테마 모두 왼쪽 사이드바 디자인이 너무 평범한 것 같았습니다..<br>
-  그래서 좀 더 심플하면서도 세련된 디자인을 찾다가 Hydeout에 정착하게 되었습니다.</p>
+  그래서 좀 더 심플하면서도 세련된 디자인을 찾다가 Hydeout에 정착하게 되었습니다.<br>
+  나중에 시간이 되면 Hydejack 테마의 매끄러운 애니메이션을 일부 추가해볼 생각입니다!</p>
 
 </details>
 <br>
@@ -275,7 +278,7 @@ Github 페이지에서 <strong>Code</strong> 버튼을 누르고, <strong>Downlo
 bundle install
 bundle exec jekyll serve
 ```
-혹시 다음과 같이 <strong>Permission denied - bind(2)</strong> 에러가 뜨고 서버가 실행되지 않는다면, 현재 컴퓨터에서 특정 프로세스가 4000번 포트(Jekyll의 기본 포트)를 사용 중이라는 의미이므로, 4001번 포트로 서버를 실행해줍니다.
+혹시 다음과 같이 <strong>Permission denied - bind(2)</strong> 에러가 뜨고 서버가 실행되지 않는다면, 현재 컴퓨터에서 특정 프로세스가 4000번 포트(Jekyll의 기본 포트)를 사용 중이라는 의미이므로, 아래 명령어를 입력해서 4001번 포트로 서버를 실행해줍니다.
 
 ![placehorder](/imgs/github21.JPG)
 
@@ -324,7 +327,7 @@ Github Desktop을 확인해보면, 다음과 같이 여러가지 변경 사항�
 
 에러 코드를 전부 복사-붙여넣기해서 질문하거나 상황을 자세히 설명하면, 생각보다 높은 정확도로 문제 해결법을 알려줍니다!
 
-저도 이 블로그를 만들면서 겪었던 에러를 모두 ChatGPT를 통해 해결했습니다!
+저도 이 블로그를 만들면서 겪었던 에러들을 모두 ChatGPT를 통해 해결했습니다!
 
 그래도 잘 모르시겠다면, 댓글 남겨주셔도 됩니다!
 
@@ -339,4 +342,3 @@ Github Desktop을 확인해보면, 다음과 같이 여러가지 변경 사항�
 <a href="https://hanarotg.tistory.com/216" target="_blank" rel="noopener noreferrer">https://hanarotg.tistory.com/216</a>
 
 <a href="https://lifetutorial.tistory.com/7" target="_blank" rel="noopener noreferrer">https://lifetutorial.tistory.com/7</a>
-
