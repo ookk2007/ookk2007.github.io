@@ -122,9 +122,9 @@ Github Desktop을 실행하고 본인의 Github 계정으로 로그인하면, �
 
   <p>이 에러를 해결하기 위해서, 왼쪽 상단의 <strong>File -> Options...</strong>를 클릭해서 설정창에 들어갑니다.<br>
     그리고 'Git' 옵션에 들어가서, Name과 Email에 {username}과 {github_id}를 입력하고, 'Save'를 누릅니다.<br></p>
-  ![placehorder](/imgs/github10.JPG)
+  <img src="/imgs/github10.JPG" alt="github_desktop_error_pic">
 </details>
-
+<br>
 Commit이 성공적으로 되었다면, 아래와 같이 'No local changes'라는 문구가 나오게 됩니다.
 
 여기서 'Push Origin' 버튼을 눌러, Github Repository에 변경 사항을 업로드해줍니다.
