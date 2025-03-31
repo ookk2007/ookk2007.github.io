@@ -229,7 +229,10 @@ body {
         }
       }
     }
-
+    #search-overlay {
+      width: calc(100% - $sidebar-width);  // 사이드바 너비를 제외한 나머지 너비
+      max-width: none;  // max-width를 해제
+    }
     > * {
       max-width: 38rem;
       padding: 0;

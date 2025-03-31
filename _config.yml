@@ -5,7 +5,7 @@ highlighter:      rouge
 # Setup
 title:            Archi-veD
 tagline:          by Jonghyeok Han
-description:      'An archive of my studies, dev logs, and tutorials.'
+description:      'An archive of my <a href="/category/learning">learning</a>, <a href="/category/dev-log">dev logs</a>, and <a href="/category/tutorial">tutorials</a>.'
 url:              https://ookk2007.github.io
 baseurl:          ''
                   # the optional subpath of your site, e.g. "/blog"
@@ -16,7 +16,9 @@ baseurl:          ''
 
 author:
   name:           'Jonghyeok Han'
-  url:            https://github.com/ookk2007
+  github:         https://github.com/ookk2007
+  email:          ookk2007@naver.com
+  youtube:        https://www.youtube.com/@hanjeok1
 
 remote_theme: fongandrew/hydeout
 excerpt_separator: <!--more-->
