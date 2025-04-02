@@ -42,3 +42,6 @@ sidebar_home_link:  true
 version: 1.0.0
 
 google_analytics: G-E0H4FWFVWG
+
+disqus:
+  shortname: ookk2007
