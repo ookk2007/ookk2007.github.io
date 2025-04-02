@@ -7,7 +7,7 @@ sidebar_link: true
 <p class="message">
   <strong>
   이름(Name): 한종혁(Jonghyeok Han)<br>
-  이메일(email): ookk2007@naver.com<br>
+  이메일(email): <a href='mailto:ookk2007@naver.com' >ookk2007@naver.com</a><br>
   학력(Education): 고려대학교 컴퓨터학과 졸업예정<br>(Korea University, Department of Computer Science and Engineering)
   </strong>
 </p>
@@ -19,7 +19,7 @@ sidebar_link: true
 아래에서 제가 관심을 갖고 공부해본 모든 분야를 소개해드리겠습니다.
 
 저의 가장 큰 취미는 여행입니다. <br>세상을 다 돌아보고 큰 사람이 되는 것이 제 인생의 꿈입니다. <br>참고로, 저는 자연을 만끽하는 여행을 좋아합니다.<br>
-제 여행 브이로그가 궁금하신 분은 제 유튜브를 확인해주세요. (영상 편집 빨리 하겠습니다..)
+제 여행 브이로그가 궁금하신 분은 제 <a href='https://www.youtube.com/@hanjeok1' target="_blank">유튜브</a>를 확인해주세요. (영상 편집 빨리 하겠습니다..)
 
 
 제가 블로그를 시작하게 된 계기는 제 활동을 기록하고, 다른 개발자들에게 도움을 주고 싶었기 때문입니다. <br>
@@ -34,7 +34,7 @@ Hi, I'm Jonghyeok Han, a developer who wants to make a positive impact on the wo
 
 I have primarily studied the field of information security, especially reverse engineering and system programming. <br>However, I have also explored various other fields out of curiosity and interest. <br>Below, I will introduce all the areas I have studied.
 
-My greatest hobby is traveling. <br>My life's dream is to explore the whole world and grow as a great man. <br>I especially enjoy trips where I can fully immerse myself in nature. <br>If you're interested in my travel vlogs, check out my YouTube channel! <br>(I promise I’ll edit the videos soon...)
+My greatest hobby is traveling. <br>My life's dream is to explore the whole world and grow as a great man. <br>I especially enjoy trips where I can fully immerse myself in nature. <br>If you're interested in my travel vlogs, check out <a href='https://www.youtube.com/@hanjeok1' target="_blank">my YouTube channel</a>! <br>(I promise I’ll edit the videos soon...)
 
 I started this blog to document my activities and help other developers. <br>I also believed that building my own blog website would improve my development skills. <br>I hope my blog serves as a window of knowledge for some and a source of inspiration for others!
 
