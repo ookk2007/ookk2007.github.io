@@ -11,7 +11,6 @@ sidebar_link: true
     {% assign category_name = category | first %}
     {% assign category_slug = category_name | downcase | replace: " ", "-" %}
     <div id="#{{ category_slug }}"></div>
-    <p></p>
 
     <h2 class="category-head">
         <a href="{{ site.baseurl }}/category/{{ category_slug }}">{{ category_name }}</a>
@@ -29,7 +28,8 @@ sidebar_link: true
             </h4>
           </li>
         {% endfor %}
-      </ul>
+    </ul>
+    <hr>
   </div>
 {% endfor %}
 </div>
