@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Google Maps + Firebase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      #map { height: 500px; width: 100%; }
+      form { margin-top: 20px; }
+      input, textarea { display: block; margin-bottom: 10px; width: 300px; }
+    </style>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+
+  </head>
+  <body>
+    <h2>Google 지도 마커 관리</h2>
+    <div id="map"></div>
+
+    <form id="marker-form">
+      <input type="text" id="title" placeholder="제목" required />
+      <input type="number" id="lat" placeholder="위도" step="any" required />
+      <input type="number" id="lng" placeholder="경도" step="any" required />
+      <textarea id="desc" placeholder="설명" required></textarea>
+      <input type="file" id="image" accept="image/*" required />
+      <button type="submit">마커 추가</button>
+    </form>
+
+    <!-- Google Maps API (아래 YOUR_API_KEY 부분을 발급받은 키로 교체) -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqVKfR9xms-BS1q_knVrC1Iu3pFB42EB0&callback=initMap"
+      async
+      defer
+    ></script>
+
+    <script>
+        // Firebase 초기화
+        const firebaseConfig = {
+            apiKey: "AIzaSyAX6bguazAfd6OnKArF9dr7EGa-vxOri9A",
+            authDomain: "hyeok-and-ryang.firebaseapp.com",
+            databaseURL: "https://hyeok-and-ryang-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "hyeok-and-ryang",
+            storageBucket: "gs://hyeok-and-ryang.firebasestorage.app",
+            messagingSenderId: "627188156266",
+            appId: "1:627188156266:web:224812f4d3bfd0e2a78713"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const storage = firebase.storage();
+
+        let map;
+
+        // 지도 초기화 함수 (Google API가 자동으로 호출함)
+        window.initMap = function () {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 37.5665, lng: 126.9780 }, // 서울
+                zoom: 10,
+            });
+
+            loadMarkers();
+        };
+
+    // Firebase에서 마커 불러오기
+        function loadMarkers() {
+            db.ref("markers").once("value", (snapshot) => {
+                snapshot.forEach((child) => {
+                    const data = child.val();
+                    addImageOverlay(data);
+                });
+            });
+        }
+
+    // 오버레이 생성 함수
+        function addImageOverlay({ lat, lng, imageUrl, title }) {
+            const overlay = new google.maps.OverlayView();
+        
+            overlay.onAdd = function () {
+                const div = document.createElement("div");
+                div.style.position = "absolute";
+                div.style.width = "80px";
+                div.style.height = "80px";
+                div.style.backgroundImage = `url(${imageUrl})`;
+                div.style.backgroundSize = "cover";
+                div.style.border = "2px solid white";
+                div.style.borderRadius = "12px";
+                div.style.boxShadow = "0 2px 6px rgba(0,0,0,0.3)";
+                div.title = title;
+            
+                this.div = div;
+            
+                const panes = this.getPanes();
+                panes.overlayImage.appendChild(div);
+            };
+        
+            overlay.draw = function () {
+                const projection = this.getProjection();
+                const position = new google.maps.LatLng(lat, lng);
+                const pixel = projection.fromLatLngToDivPixel(position);
+            
+                const div = this.div;
+                div.style.left = (pixel.x - 40) + "px"; // 이미지 가운데 정렬
+                div.style.top = (pixel.y - 40) + "px";
+            };
+        
+            overlay.onRemove = function () {
+                this.div.parentNode.removeChild(this.div);
+                this.div = null;
+            };
+        
+            overlay.setMap(map);
+        }
+
+    
+
+      // 마커 추가
+      document.getElementById("marker-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const title = document.getElementById("title").value;
+        const lat = parseFloat(document.getElementById("lat").value);
+        const lng = parseFloat(document.getElementById("lng").value);
+        const desc = document.getElementById("desc").value;
+        const imageFile = document.getElementById("image").files[0];
+
+        if (!imageFile) {
+            alert("사진을 선택해주세요.");
+            return;
+        }
+        
+        try {
+            // 1. Firebase Storage에 이미지 업로드
+            const storageRef = firebase.storage().ref();
+            const imageRef = storageRef.child("marker-images/" + Date.now() + "_" + imageFile.name);
+            const snapshot = await imageRef.put(imageFile);
+            const imageUrl = await snapshot.ref.getDownloadURL();
+
+            // 2. DB에 마커 데이터 저장 (이미지 포함)
+            const newMarker = { title, lat, lng, desc, imageUrl };
+            await db.ref("markers").push(newMarker);
+
+            alert("마커가 추가되었습니다!");
+            location.reload(); // 새로고침
+        } catch (error) {
+            console.error("에러 발생:", error);
+            alert("업로드에 실패했습니다.");
+        }
+      });
+    </script>
+  </body>
+</html>
