@@ -364,7 +364,7 @@ button:hover {
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
 
 <body>
@@ -444,6 +444,16 @@ button:hover {
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const storage = firebase.storage();
+    const auth = firebase.getAuth();
+
+    firebase.signInAnonymously(auth)
+      .then(() => {
+        console.log("익명 로그인 성공");
+      })
+      .catch((error) => {
+    console.error("로그인 실패", error);
+      });
+
 
     let map;
     const overlays = [];
