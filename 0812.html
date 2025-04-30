@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Google Maps + Firebase</title>
+  <title>Our Memorial Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link href="https://fonts.googleapis.com/css2?family=42dot+Sans:wght@300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <style>
@@ -45,7 +45,7 @@ html, body {
 
 #sidebar {
   position: absolute;
-  background-color: white;
+  background-color: #FFFDF7;
   top: 50px;
   left: 0;
   width: min(55%, 270px);
@@ -139,7 +139,7 @@ button:hover {
   left: 50%;
   width: min(350px, 80%);
   transform: translate(-50%, -50%);
-  background: white;
+  background: #FFFDF7;;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
@@ -196,6 +196,168 @@ button:hover {
       margin-bottom: 10px;
       width: 300px;
     }
+    #marker-form input[type="text"],
+  #marker-form input[type="date"],
+  #marker-form input[type="file"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: "42dot Sans", sans-serif;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+
+  #marker-form input[type="file"] {
+    background-color: #f8f4f1;
+    border: 1px dashed #c5bcb8;
+    color: #5a4239;
+    cursor: pointer;
+  }
+
+  #marker-form input[type="file"]::file-selector-button {
+    background: #6a4e42;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  #marker-form input[type="file"]::file-selector-button:hover {
+    background: #5a4239;
+  }
+
+  #marker-form button[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  #select-location-btn {
+    background-color: #6a4e42;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  #select-location-btn:hover {
+    background-color: #5a4239;
+  }
+
+  #location-confirm {
+    color: #28a745;
+    font-size: 14px;
+  }
+
+  #thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  #thumbnails img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  #thumbnails img.selected {
+    border: 3px solid #6a4e42;
+  }
+
+  #location-instruction {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(110, 110, 109);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 16px;
+  z-index: 9999;
+  font-family: "42dot Sans", sans-serif;
+
+  text-align: center;            /* 가운데 정렬 */
+  word-break: keep-all;         /* 단어 단위로 줄바꿈 */
+  white-space: normal;          /* 줄바꿈 허용 */
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+#location-instruction.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#marker-options div:hover {
+  background-color: #f0f0f0;
+}
+
+ #password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #666;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: background-color 2s ease, opacity 2s ease;
+  }
+
+  #password-overlay.fade-out {
+    background-color: #FFF6C3;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #password-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    text-align: center;
+    font-family: '42dot Sans', sans-serif;
+  }
+
+  #password-input {
+    padding: 8px 12px;
+    font-size: 16px;
+    width: 200px;
+    margin-bottom: 10px;
+  }
+
+  #password-error {
+    color: red;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+@media (max-width: 768px) {
+  #location-instruction {
+    width: 50%;
+  }
+}
   </style>
 
   <!-- Firebase SDK -->
@@ -206,7 +368,16 @@ button:hover {
 </head>
 
 <body>
-   
+  <div id="password-overlay">
+    <div id="password-box">
+      <h3>비밀번호를 입력하세요</h3>
+      <input type="text" id="password-input" />
+      <br/>
+      <button id="submit-password">확인</button>
+      <div id="password-error"></div>
+    </div>
+  </div>
+
   <div id="map"></div>
   <div id="top-bar">
     <button id="sidebar-toggle">☰</button>
@@ -214,9 +385,24 @@ button:hover {
   </div>
   <div id="sidebar">
     <ul id="marker-list"></ul>
-    <button id="add-marker-button">마커 추가하기</button>
+    <button id="add-marker-button">추억 추가하기</button>
   </div>
-
+  <div id="location-instruction">
+    지도 내 특정 위치를 길게 눌러서 위치를 선택하세요.
+  </div>
+  <div id="marker-options" style="
+  position: absolute;
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  z-index: 9999;
+  font-size: 14px;
+">
+  <div id="edit-marker" style="padding: 10px; cursor: pointer;">✏️ 수정</div>
+  <div id="delete-marker" style="padding: 10px; cursor: pointer;">🗑️ 삭제</div>
+</div>
   <form id="marker-form">
     <p></p>
     <input type="text" id="title" placeholder="제목" required />
@@ -232,7 +418,7 @@ button:hover {
     <div id="thumbnails" style="display:flex; flex-wrap:wrap; margin-top:10px; gap:8px;"></div>
     <input type="hidden" id="coverIndex" value="0" />
     <p></p>
-    <button type="submit">마커 추가</button>
+    <button type="submit">추억 추가</button>
   </form>
 
   <div id="location-action-buttons" style="display: none;">
@@ -262,7 +448,55 @@ button:hover {
     let map;
     const overlays = [];
     let infoWindow;
+    let editMode = false;
+    let editingKey = null;
+    const form = document.getElementById("marker-form");
+    const imageInput = document.getElementById("image");
+    const thumbnailsContainer = document.getElementById("thumbnails");
+    let imageList = []; // [File, File, 'https://...', ...]
 
+
+    
+    const cp = db.ref("ryb2ui45ligvmjyu248np9053615f892p3457n10238bv56p8712341");
+    document.getElementById("submit-password").addEventListener("click", () => {
+      const input = document.getElementById("password-input").value;
+      const errorBox = document.getElementById("password-error");
+      cp.once("value").then(snapshot => {
+        if (input === String(snapshot.val())) {
+          const now = Date.now();
+          localStorage.setItem("authenticated", "true");
+          localStorage.setItem("authTime", now.toString());
+          const overlay = document.getElementById("password-overlay");
+          overlay.classList.add("fade-out");
+          setTimeout(() => {
+            overlay.style.display = "none";
+          }, 2000);
+        } else {
+          errorBox.textContent = "다시 시도해주세요.";
+        }
+      });
+    });
+
+  // 엔터키로도 확인 가능하게
+  document.getElementById("password-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      document.getElementById("submit-password").click();
+    }
+  });
+  //인증 정보가 존재한다면면
+  window.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("password-overlay");
+  const authTime = parseInt(localStorage.getItem("authTime"), 10);
+  const now = new Date().getTime();
+  if (localStorage.getItem("authenticated") === "true" && now - authTime < 86400000) {
+    overlay.style.display = "none";
+  }
+  else {
+    localStorage.removeItem("authenticated");
+    localStorage.removeItem("authTime");
+    overlay.style.display = "flex";
+  }
+});
     // 지도 초기화 함수 (Google API가 자동으로 호출함)
     window.initMap = function () {
       infoWindow = new google.maps.InfoWindow();
@@ -308,35 +542,136 @@ button:hover {
         <span>${date.toISOString().slice(0, 10)} (${dday})</span><br>
         <b>${data.title}</b>
       `;
-      li.addEventListener("click", () => {
+      li.addEventListener("click", (e) => {
+        if (wasLongPress) {
+          e.preventDefault();
+          e.stopPropagation(); // long press에서 click 동작 막기
+          return;
+        }
         document.getElementById("sidebar").classList.remove("open");
         map.panTo(new google.maps.LatLng(data.lat, data.lng));
         infoWindow.close();
-        infoWindow.setContent(`
-  <div style="max-width:250px; overflow:hidden; touch-action: manipulation; -webkit-overflow-scrolling: auto;">
-    <h4 style="margin-bottom:8px;">${data.title}</h4>
-    <div style="display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;">
-      ${(data.imageUrls || []).map(url => `
-        <img src="${url}" style="
-          flex: 0 0 100%; 
-          max-width:100%; 
-          height:auto;
-          object-fit: contain;
-          border-radius:8px; 
-          margin-right:8px; 
-          scroll-snap-align: start;" />
-      `).join("")}
+        const imagesHtml = data.imageUrls.map(url => `
+    <img src="${url}" style="
+      flex: 0 0 100%;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      scroll-snap-align: start;
+      margin-right: 8px;
+      background-color: #ffffff;
+    " />
+  `).join("");
+
+  infoWindow.setContent(`
+    <div style="max-width:250px; 
+    overflow:hidden; 
+    touch-action: manipulation; 
+    -webkit-overflow-scrolling: auto;
+    font-family: '42dot Sans', sans-serif;
+    ">
+      <h4 style="
+      margin-top:0px;
+      margin-bottom:0px; 
+      font-size: 18px;
+      ">${data.title}</h4>
+      <p style="
+      margin-top:0px;
+      margin-bottom:8px; 
+      font-size: 14px;">${date.toISOString().slice(0, 10)}</p>
+      <div style="
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      ">
+        ${imagesHtml}
+      </div>
     </div>
-  </div>
-`);
+  `);
 
         infoWindow.setPosition(new google.maps.LatLng(data.lat, data.lng));
         infoWindow.open(map);
       });
+      
+      //long press 감지 -> 마커 수정/삭제 메뉴 띄우기
+      let pressTimer;
+      let wasLongPress = false;
+
+li.addEventListener("mousedown", (e) => {
+  wasLongPress = false;
+  pressTimer = setTimeout(() => {
+    wasLongPress = true;
+    showMarkerOptions(e.pageX, e.pageY, data, key);
+  }, 600); // 600ms 이상 누르면 long press로 간주
+});
+
+li.addEventListener("mouseup", () => clearTimeout(pressTimer));
+li.addEventListener("mouseleave", () => clearTimeout(pressTimer));
+//모바일용 longpress
+li.addEventListener("touchstart", (e) => {
+  wasLongPress = false;
+  pressTimer = setTimeout(() => {
+    wasLongPress = true;
+    const touch = e.touches[0];
+    showMarkerOptions(touch.pageX, touch.pageY, data, key);
+  }, 600);
+});
+
+li.addEventListener("touchend", () => clearTimeout(pressTimer));
       markerList.appendChild(li);
     });
   });
 }
+
+function showMarkerOptions(x, y, data, key) {
+  const menu = document.getElementById("marker-options");
+
+  menu.style.left = `${x}px`;
+  menu.style.top = `${y}px`;
+  menu.style.display = "block";
+  // 수정
+  document.getElementById("edit-marker").onclick = () => {
+    menu.style.display = "none";
+    form.classList.add("show");
+  document.getElementById("title").value = data.title;
+  document.getElementById("date").value = data.date;
+  document.getElementById("lat").value = data.lat;
+  document.getElementById("lng").value = data.lng;
+
+  // 기존 이미지 썸네일 표시 (업로드는 다시 해야 하므로 참고용으로만)
+  imageList = [...data.imageUrls];
+  renderThumbnails(imageList);
+
+  // 폼 상태 변경
+  document.getElementById("image").removeAttribute("required");
+  document.getElementById("location-confirm").style.display = "block";
+  document.querySelector("#marker-form button[type='submit']").textContent = "수정하기";
+  editMode = true;
+  editingKey = key;
+  };
+
+  // 삭제
+  document.getElementById("delete-marker").onclick = () => {
+    menu.style.display = "none";
+    if (confirm("정말 삭제하시겠습니까?")) {
+      db.ref("markers").child(key).remove().then(() => {
+        alert("마커가 삭제되었습니다.");
+        location.reload(); // 또는 마커 새로고침
+      });
+    }
+  };
+}
+
+// 메뉴 바깥 클릭 시 닫기
+document.addEventListener("click", (e) => {
+  const menu = document.getElementById("marker-options");
+  if (!menu.contains(e.target)) {
+    menu.style.display = "none";
+  }
+});
+
 
 
     //Zoom 레벨에 따른 마커 크기 계산
@@ -349,9 +684,9 @@ button:hover {
 
 
     // 오버레이 생성 함수
-    function addImageOverlay({ lat, lng, imageUrls, title }) {
+    function addImageOverlay({ date, lat, lng, imageUrls, title }) {
       const div = document.createElement("div");
-      
+      const date_val = new Date(date);
       div.addEventListener("click", () => {
   // 기존에 열린 infoWindow를 닫고 새로 열기
   infoWindow.close(); // 기존 infoWindow 닫기
@@ -370,8 +705,21 @@ button:hover {
   `).join("");
 
   infoWindow.setContent(`
-    <div style="max-width:250px; overflow:hidden; touch-action: manipulation; -webkit-overflow-scrolling: auto;">
-      <h4 style="margin-bottom:8px;">${title}</h4>
+    <div style="max-width:250px; 
+    overflow:hidden; 
+    touch-action: manipulation; 
+    -webkit-overflow-scrolling: auto;
+    font-family: '42dot Sans', sans-serif;
+    ">
+      <h4 style="
+      margin-top:0px;
+      margin-bottom:0px; 
+      font-size: 18px;
+      ">${title}</h4>
+      <p style="
+      margin-top:0px;
+      margin-bottom:8px; 
+      font-size: 14px;">${date_val.toISOString().slice(0, 10)}</p>
       <div style="
         display: flex;
         overflow-x: auto;
@@ -395,7 +743,7 @@ button:hover {
         div.style.borderRadius = "12px";
         div.style.boxShadow = "0 2px 6px rgba(0,0,0,0.3)";
         div.style.backgroundSize = "cover";
-        div.style.backgroundImage = `url(${imageUrls})`;
+        div.style.backgroundImage = `url("${imageUrls[0]}")`;
         div.title = title;
 
         this.div = div;
@@ -449,17 +797,22 @@ document.addEventListener("click", (e) => {
 });
 
 //마커 추가 창 열기
-const form = document.getElementById("marker-form");
 let tempMarker = null;
 let selectingPosition = false;
 
 document.getElementById("add-marker-button").addEventListener("click", () => {
   form.classList.add("show");
+  form.reset();
+  document.getElementById("location-confirm").style.display = "none";
+  document.querySelector("#marker-form button[type='submit']").textContent = "추억 추가";
+  thumbnailsContainer.innerHTML = ""; // 썸네일 초기화
 });
 
 document.addEventListener("click", (e) => {
   if (form.classList.contains("show") && !form.contains(e.target) && !e.target.closest("#add-marker-button") &&
     !e.target.closest("#confirm-location-btn") &&
+    !e.target.closest("#edit-marker") &&
+    !e.target.closest(".close_btn") &&
     !e.target.closest("#cancel-location-btn")) {
       form.classList.remove("show");
     if (tempMarker) {
@@ -474,6 +827,16 @@ document.getElementById("select-location-btn").addEventListener("click", () => {
   form.classList.remove("show"); // 폼 숨기기
   selectingPosition = true;
   document.getElementById("location-confirm").style.display = "none";
+
+  const instruction = document.getElementById("location-instruction");
+
+// show 클래스 추가로 페이드 인
+instruction.classList.add("show");
+
+// 3초 뒤 페이드 아웃
+setTimeout(() => {
+  instruction.classList.remove("show");
+}, 3000);
 });
 
 // 지도에서 길게 누르기 이벤트 감지 (long press)
@@ -507,21 +870,21 @@ function setupLongPressListener() {
 }
 
 //이미지 추가 시 썸네일 생성 & 대표 이미지 지정 기능 추가
-const imageInput = document.getElementById("image");
-const thumbnailsContainer = document.getElementById("thumbnails");
-let imageFiles = [];
-let coverIndex = 0;
-
 imageInput.addEventListener("change", () => {
-  thumbnailsContainer.innerHTML = ""; // 썸네일 초기화
-  imageFiles = Array.from(imageInput.files);
-  coverIndex = 0; // 기본 대표 이미지: 첫 번째
+  const selected = Array.from(imageInput.files); // 새로 선택한 파일들
+  imageList = imageList.concat(selected);        // 기존 imageList에 추가
+  renderThumbnails(imageList);
+});
 
-  imageFiles.forEach((file, index) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
+//썸네일 랜더링
+function renderThumbnails(list){
+  thumbnailsContainer.innerHTML = ""; // 썸네일 초기화
+  list.forEach((item, index) => {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
       const img = document.createElement("img");
-      img.src = e.target.result;
+      img.src = typeof item === "string" ? item : URL.createObjectURL(item);
       img.style.width = "80px";
       img.style.height = "80px";
       img.style.objectFit = "cover";
@@ -530,21 +893,43 @@ imageInput.addEventListener("change", () => {
       img.style.border = index === 0 ? "3px solid #007bff" : "2px solid #ccc";
 
       img.addEventListener("click", () => {
-        coverIndex = index;
         document.getElementById("coverIndex").value = index;
         // 모든 이미지 border 초기화
-        Array.from(thumbnailsContainer.children).forEach(th => {
-          th.style.border = "2px solid #ccc";
+        Array.from(thumbnailsContainer.children).forEach(wrapper => {
+          const im = wrapper.querySelector("img");
+          if(img) im.style.border = "2px solid #ccc";
         });
         img.style.border = "3px solid #007bff"; // 선택된 이미지 강조
       });
 
-      thumbnailsContainer.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
-});
+      // X 버튼
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.className = "close_btn";
+    closeBtn.style.position = "absolute";
+    closeBtn.style.top = "2px";
+    closeBtn.style.right = "2px";
+    closeBtn.style.background = "rgba(0,0,0,0.6)";
+    closeBtn.style.color = "white";
+    closeBtn.style.border = "none";
+    closeBtn.style.borderRadius = "50%";
+    closeBtn.style.width = "20px";
+    closeBtn.style.height = "20px";
+    closeBtn.style.cursor = "pointer";
+    closeBtn.style.fontSize = "14px";
+    closeBtn.style.lineHeight = "18px";
+    closeBtn.style.padding = "0";
 
+    closeBtn.addEventListener("click", () => {
+      imageList.splice(index, 1); // 삭제
+      renderThumbnails(imageList);
+    });
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(closeBtn);
+    thumbnailsContainer.appendChild(wrapper);
+  });
+}
 
 // 확인 버튼: 좌표 입력 후 폼 복귀
 document.getElementById("confirm-location-btn").addEventListener("click", () => {
@@ -629,7 +1014,7 @@ function resizeImage(file, maxWidth = 800, maxHeight = 800) {
   });
 }
 
-    // 마커 추가
+    // 마커 추가 or 수정
     document.getElementById("marker-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const title = document.getElementById("title").value;
@@ -637,32 +1022,36 @@ function resizeImage(file, maxWidth = 800, maxHeight = 800) {
       const lng = parseFloat(document.getElementById("lng").value);
       const date = document.getElementById("date").value;
       const coverIndex = parseInt(document.getElementById("coverIndex").value);
-      const imageFiles = Array.from(document.getElementById("image").files);
-      if (!imageFiles) {
-        alert("사진을 선택해주세요.");
-        return;
-      }
-
-      // 대표 이미지가 먼저 오도록 정렬
-      const sortedFiles = [imageFiles[coverIndex], ...imageFiles.filter((_, i) => i !== coverIndex)];
-      
-      const storageRef = firebase.storage().ref();
+       // 대표 이미지가 맨 앞에 오도록 재정렬
+      const reorderedList = [imageList[coverIndex], ...imageList.filter((_, i) => i !== coverIndex)];
       const imageUrls = [];
+      const storageRef = firebase.storage().ref();
 
-      for (const file of sortedFiles) {
-        const resizedBlob = await resizeImage(file); // 리사이징 먼저
-        const imageRef = storageRef.child("marker-images/" + Date.now() + "_" + file.name);
-        const snapshot = await imageRef.put(resizedBlob); // 리사이즈된 blob 업로드
-        const url = await snapshot.ref.getDownloadURL();
-        imageUrls.push(url);
+      for (const item of reorderedList) {
+        if (typeof item === "string") {
+          imageUrls.push(item); // 기존 이미지 URL 그대로 유지
+        } else { //파일이면 리사이징 & 업로드 과정 수행행
+          const resized = await resizeImage(item);
+          const ref = storageRef.child("marker-images/" + Date.now() + "_" + item.name);
+          const snapshot = await ref.put(resized);
+          const url = await snapshot.ref.getDownloadURL();
+          imageUrls.push(url);
+        }
       }
+      const updatedMarker = { title, date, lat, lng, imageUrls };
 
-      const newMarker = { date, title, lat, lng, imageUrls };
-      db.ref("markers").push(newMarker);
-      alert("마커가 추가되었습니다!");
+      if (editMode && editingKey) {
+    await db.ref("markers").child(editingKey).update(updatedMarker);
+    alert("마커가 수정되었습니다.");
+  } else {
+    await db.ref("markers").push(updatedMarker);
+    alert("마커가 추가되었습니다.");
+  }
       // 초기화
+      imageList = [];
 form.classList.remove("show");
 form.reset();
+thumbnailsContainer.innerHTML = "";
 if (tempMarker) {
   tempMarker.setMap(null);
   tempMarker = null;
