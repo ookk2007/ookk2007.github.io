@@ -446,15 +446,6 @@ button:hover {
     const storage = firebase.storage();
     const auth = firebase.auth();
 
-    auth.signInAnonymously()
-      .then(() => {
-        console.log("익명 로그인 성공");
-      })
-      .catch((error) => {
-    console.error("로그인 실패", error);
-      });
-
-
     let map;
     const overlays = [];
     let infoWindow;
