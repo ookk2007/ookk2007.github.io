@@ -444,9 +444,9 @@ button:hover {
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const storage = firebase.storage();
-    const auth = firebase.getAuth();
+    const auth = firebase.auth();
 
-    firebase.signInAnonymously(auth)
+    auth.signInAnonymously()
       .then(() => {
         console.log("익명 로그인 성공");
       })
