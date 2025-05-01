@@ -649,7 +649,8 @@ function showMarkerOptions(x, y, data, key) {
   document.getElementById("lng").value = data.lng;
 
   // 기존 이미지 썸네일 표시 (업로드는 다시 해야 하므로 참고용으로만)
-  pre_imageList = imageList = [...data.imageUrls];
+  imageList = [...data.imageUrls];
+  pre_imageList = [...data.imageUrls];
   renderThumbnails(imageList);
 
   // 폼 상태 변경
