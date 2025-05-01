@@ -1057,7 +1057,7 @@ function resizeImage(file, maxWidth = 800, maxHeight = 800) {
       const imageUrls = [];
       const storageRef = firebase.storage().ref();
 		// 수정 시 삭제 대상 이미지: pre_imageList에는 있지만, imageList에는 없는 것
-      if(pre_imageList){
+      if(pre_imageList != []){
         console.log(pre_imageList);
         console.log(imageList);
 		const imagesToDelete = pre_imageList.filter(url => !imageList.includes(url));
