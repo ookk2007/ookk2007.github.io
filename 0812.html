@@ -1051,6 +1051,7 @@ function resizeImage(file, maxWidth = 800, maxHeight = 800) {
         imagesToDelete.map((url) => {
           const storage_imgRef = firebase.storage().refFromURL(url);
           storage_imgRef.delete();
+      	});
       }
       for (const item of reorderedList) {
         if (typeof item === "string") {
