@@ -455,6 +455,7 @@ button:hover {
     const imageInput = document.getElementById("image");
     const thumbnailsContainer = document.getElementById("thumbnails");
     let imageList = []; // [File, File, 'https://...', ...]
+    let pre_imageList = [];
 
 
     
@@ -648,7 +649,7 @@ function showMarkerOptions(x, y, data, key) {
   document.getElementById("lng").value = data.lng;
 
   // 기존 이미지 썸네일 표시 (업로드는 다시 해야 하므로 참고용으로만)
-  imageList = [...data.imageUrls];
+  pre_imageList = imageList = [...data.imageUrls];
   renderThumbnails(imageList);
 
   // 폼 상태 변경
@@ -663,9 +664,19 @@ function showMarkerOptions(x, y, data, key) {
   document.getElementById("delete-marker").onclick = () => {
     menu.style.display = "none";
     if (confirm("정말 삭제하시겠습니까?")) {
+      // 먼저 해당 마커의 데이터에서 imageUrls 읽기
+    db.ref("markers").child(key).once("value").then((snapshot) => {
+      const markerData = snapshot.val();
+      const imageUrls = markerData?.imageUrls || [];
+
+      imageUrls.map((url) => {
+        const storageRef = firebase.storage().refFromURL(url);
+        storageRef.delete();
+      });
+
       db.ref("markers").child(key).remove().then(() => {
         alert("마커가 삭제되었습니다.");
-        location.reload(); // 또는 마커 새로고침
+        location.reload();
       });
     }
   };
@@ -810,6 +821,7 @@ let selectingPosition = false;
 document.getElementById("add-marker-button").addEventListener("click", () => {
   form.classList.add("show");
   form.reset();
+  pre_imageList = [];
   document.getElementById("location-confirm").style.display = "none";
   document.querySelector("#marker-form button[type='submit']").textContent = "추억 추가";
   thumbnailsContainer.innerHTML = ""; // 썸네일 초기화
@@ -1033,7 +1045,13 @@ function resizeImage(file, maxWidth = 800, maxHeight = 800) {
       const reorderedList = [imageList[coverIndex], ...imageList.filter((_, i) => i !== coverIndex)];
       const imageUrls = [];
       const storageRef = firebase.storage().ref();
-
+		// 수정 시 삭제 대상 이미지: pre_imageList에는 있지만, imageList에는 없는 것
+      if(pre_imageList){
+		const imagesToDelete = pre_imageList.filter(url => !imageList.includes(url));
+        imagesToDelete.map((url) => {
+          const storage_imgRef = firebase.storage().refFromURL(url);
+          storage_imgRef.delete();
+      }
       for (const item of reorderedList) {
         if (typeof item === "string") {
           imageUrls.push(item); // 기존 이미지 URL 그대로 유지
