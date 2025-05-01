@@ -669,11 +669,13 @@ function showMarkerOptions(x, y, data, key) {
       const markerData = snapshot.val();
       const imageUrls = markerData?.imageUrls || [];
 
-      imageUrls.map((url) => {
+      const deletePromises = imageUrls.map((url) => {
         const storageRef = firebase.storage().refFromURL(url);
-        storageRef.delete();
+        return storageRef.delete().catch((err) => {
+          console.warn("이미지 삭제 실패:", err);
+        });
       });
-
+		await Promise.all(deletePromises);
       db.ref("markers").child(key).remove().then(() => {
         alert("마커가 삭제되었습니다.");
         location.reload();
@@ -1048,10 +1050,13 @@ function resizeImage(file, maxWidth = 800, maxHeight = 800) {
 		// 수정 시 삭제 대상 이미지: pre_imageList에는 있지만, imageList에는 없는 것
       if(pre_imageList){
 		const imagesToDelete = pre_imageList.filter(url => !imageList.includes(url));
-        imagesToDelete.map((url) => {
+        const deletePromises = imagesToDelete.map((url) => {
           const storage_imgRef = firebase.storage().refFromURL(url);
-          storage_imgRef.delete();
-      	});
+          return storage_imgRef.delete().catch((err) => {
+      console.warn("이미지 삭제 실패:", err);
+    });
+  });
+  await Promise.all(deletePromises);
       }
       for (const item of reorderedList) {
         if (typeof item === "string") {
