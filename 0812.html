@@ -500,8 +500,7 @@ button:hover {
 });
     // 지도 초기화 함수 (Google API가 자동으로 호출함)
     window.initMap = function () {
-      //익명 로그인 시도
-    auth.signInAnonymously();
+      
       infoWindow = new google.maps.InfoWindow();
 
       map = new google.maps.Map(document.getElementById("map"), {
@@ -514,8 +513,13 @@ button:hover {
         cameraControl: false,
         gestureHandling: "greedy"
       });
-
+      //익명 로그인 시도
+	auth.signInAnonymously()
+    .then(() => {
       loadMarkers();
+    })
+    .catch((error) => {
+    });
 
       map.addListener("zoom_changed", () => {
         const currentZoom = map.getZoom();
