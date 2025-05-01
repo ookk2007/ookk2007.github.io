@@ -661,7 +661,7 @@ function showMarkerOptions(x, y, data, key) {
   };
 
   // 삭제
-  document.getElementById("delete-marker").onclick = () => {
+  document.getElementById("delete-marker").onclick = async () => {
     menu.style.display = "none";
     if (confirm("정말 삭제하시겠습니까?")) {
       // 먼저 해당 마커의 데이터에서 imageUrls 읽기
