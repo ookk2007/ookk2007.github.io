@@ -445,7 +445,9 @@ button:hover {
     const db = firebase.database();
     const storage = firebase.storage();
     const auth = firebase.auth();
-
+	
+    //익명 로그인 시도
+    auth.signInAnonymously();
     let map;
     const overlays = [];
     let infoWindow;
