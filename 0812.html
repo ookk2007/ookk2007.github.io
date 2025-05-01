@@ -664,25 +664,33 @@ function showMarkerOptions(x, y, data, key) {
   document.getElementById("delete-marker").onclick = async () => {
     menu.style.display = "none";
     if (confirm("정말 삭제하시겠습니까?")) {
-      // 먼저 해당 마커의 데이터에서 imageUrls 읽기
-    db.ref("markers").child(key).once("value").then((snapshot) => {
+    try {
+      // 1. 마커 데이터 가져오기
+      const snapshot = await db.ref("markers").child(key).once("value");
       const markerData = snapshot.val();
       const imageUrls = markerData?.imageUrls || [];
 
+      // 2. 이미지 삭제
       const deletePromises = imageUrls.map((url) => {
         const storageRef = firebase.storage().refFromURL(url);
         return storageRef.delete().catch((err) => {
           console.warn("이미지 삭제 실패:", err);
         });
       });
-		await Promise.all(deletePromises);
-      db.ref("markers").child(key).remove().then(() => {
-        alert("마커가 삭제되었습니다.");
-        location.reload();
-      });
-    });
+      await Promise.all(deletePromises);
+
+      // 3. 마커 삭제
+      await db.ref("markers").child(key).remove();
+
+      alert("마커가 삭제되었습니다.");
+      location.reload();
+
+    } catch (error) {
+      console.error("삭제 중 오류 발생:", error);
+      alert("삭제 중 오류가 발생했습니다.");
+    }
   }
-}
+};
 
 // 메뉴 바깥 클릭 시 닫기
 document.addEventListener("click", (e) => {
