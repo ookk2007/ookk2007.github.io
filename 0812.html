@@ -445,9 +445,7 @@ button:hover {
     const db = firebase.database();
     const storage = firebase.storage();
     const auth = firebase.auth();
-	
-    //익명 로그인 시도
-    auth.signInAnonymously();
+    
     let map;
     const overlays = [];
     let infoWindow;
@@ -502,6 +500,8 @@ button:hover {
 });
     // 지도 초기화 함수 (Google API가 자동으로 호출함)
     window.initMap = function () {
+      //익명 로그인 시도
+    auth.signInAnonymously();
       infoWindow = new google.maps.InfoWindow();
 
       map = new google.maps.Map(document.getElementById("map"), {
