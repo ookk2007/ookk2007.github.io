@@ -353,6 +353,15 @@ button:hover {
     font-size: 14px;
   }
 
+/* 전체 텍스트 선택 방지 */
+.no-select {
+  user-select: none;           /* 표준 */
+  -webkit-user-select: none;   /* Safari */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+}
+
+
 @media (max-width: 768px) {
   #location-instruction {
     width: 50%;
@@ -387,7 +396,7 @@ button:hover {
     <ul id="marker-list"></ul>
     <button id="add-marker-button">추억 추가하기</button>
   </div>
-  <div id="location-instruction">
+  <div id="location-instruction" class="no-select">
     지도 내 특정 위치를 길게 눌러서 위치를 선택하세요.
   </div>
   <div id="marker-options" style="
@@ -546,6 +555,7 @@ button:hover {
       
       // 사이드바에 추가
       const li = document.createElement("li");
+      li.classList.add("no-select");
       li.innerHTML = `
         <span>${date.toISOString().slice(0, 10)} (${dday})</span><br>
         <b>${data.title}</b>
