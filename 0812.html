@@ -548,9 +548,9 @@ button:hover {
       const data = child.val();
       const key = child.key;
       const date = new Date(data.date);
-      const today = new Date("2022-08-12");
-      const diff = Math.ceil((date - today) / (1000 * 60 * 60 * 24)) + 1;
-      const dday = diff < 0 ? `D-${Math.abs(diff)}` : `D+${diff}`;
+      const start = new Date("2022-08-12");
+      const diff = Math.ceil((date - start) / (1000 * 60 * 60 * 24));
+      const dday = diff < 0 ? `D-${Math.abs(diff)}` : `D+${diff + 1}`;
       addImageOverlay({ ...data, key });
       
       // 사이드바에 추가
