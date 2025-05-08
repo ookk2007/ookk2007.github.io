@@ -630,7 +630,7 @@ button:hover {
     const scroller = document.querySelector('.gm-style-iw #img-scroller');
     if (scroller) scroller.scrollLeft = 0;
   });
-        }, 0); // 거의 동시에 처리해도 부자연스럽지 않음
+        }, 50); // 거의 동시에 처리해도 부자연스럽지 않음
       }
     };
   });
@@ -812,7 +812,7 @@ document.addEventListener("click", (e) => {
     const scroller = document.querySelector('.gm-style-iw #img-scroller');
     if (scroller) scroller.scrollLeft = 0;
   });
-        }, 0); // 거의 동시에 처리해도 부자연스럽지 않음
+        }, 50); // 거의 동시에 처리해도 부자연스럽지 않음
       }
     };
   });
