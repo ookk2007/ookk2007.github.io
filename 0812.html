@@ -609,7 +609,20 @@ button:hover {
       </div>
     </div>
   `);
+  setTimeout(() => {
+  const images = document.querySelectorAll('.gm-style-iw img');
+  let loaded = 0;
 
+  images.forEach(img => {
+    img.onload = () => {
+      loaded++;
+      if (loaded === images.length) {
+        const scroller = document.querySelector('.gm-style-iw div[style*="scroll-snap-type"]');
+        if (scroller) scroller.scrollLeft = 0;
+      }
+    };
+  });
+}, 50);
         infoWindow.setPosition(new google.maps.LatLng(data.lat, data.lng));
         infoWindow.open(map);
       });
@@ -771,6 +784,20 @@ document.addEventListener("click", (e) => {
     </div>
   `);
 
+  setTimeout(() => {
+  const images = document.querySelectorAll('.gm-style-iw img');
+  let loaded = 0;
+
+  images.forEach(img => {
+    img.onload = () => {
+      loaded++;
+      if (loaded === images.length) {
+        const scroller = document.querySelector('.gm-style-iw div[style*="scroll-snap-type"]');
+        if (scroller) scroller.scrollLeft = 0;
+      }
+    };
+  });
+}, 50);
   infoWindow.setPosition(new google.maps.LatLng(lat, lng));
   infoWindow.open(map);
 });
