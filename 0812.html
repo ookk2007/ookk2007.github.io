@@ -618,12 +618,18 @@ button:hover {
 
         // 스크롤 초기화 (DOM 렌더링 후 첫 이미지로 이동)
         setTimeout(() => {
-          requestAnimationFrame(() => {
-            const imgScroller = document.querySelector('.gm-style-iw #img-scroller');
-            if (imgScroller) {
+          const imgScroller = document.querySelector('.gm-style-iw #img-scroller');
+          if (imgScroller) {
+            // iOS에서 스크롤 위치 초기화를 위한 추가 처리
+            imgScroller.style.scrollBehavior = 'auto';
+            imgScroller.scrollLeft = 0;
+            
+            // iOS에서 스크롤 위치가 제대로 적용되도록 추가 지연
+            setTimeout(() => {
               imgScroller.scrollLeft = 0;
-            }
-          });
+              imgScroller.style.scrollBehavior = 'smooth';
+            }, 100);
+          }
         }, 0);
       }
     };
@@ -794,12 +800,18 @@ document.addEventListener("click", (e) => {
 
         // 스크롤 초기화 (DOM 렌더링 후 첫 이미지로 이동)
         setTimeout(() => {
-          requestAnimationFrame(() => {
-            const imgScroller = document.querySelector('.gm-style-iw #img-scroller');
-            if (imgScroller) {
+          const imgScroller = document.querySelector('.gm-style-iw #img-scroller');
+          if (imgScroller) {
+            // iOS에서 스크롤 위치 초기화를 위한 추가 처리
+            imgScroller.style.scrollBehavior = 'auto';
+            imgScroller.scrollLeft = 0;
+            
+            // iOS에서 스크롤 위치가 제대로 적용되도록 추가 지연
+            setTimeout(() => {
               imgScroller.scrollLeft = 0;
-            }
-          });
+              imgScroller.style.scrollBehavior = 'smooth';
+            }, 100);
+          }
         }, 0);
       }
     };
