@@ -619,9 +619,9 @@ button:hover {
         // 스크롤 초기화 (DOM 렌더링 후 첫 이미지로 이동)
         setTimeout(() => {
           requestAnimationFrame(() => {
-            const firstImg = document.querySelector('.gm-style-iw #first-img');
-            if (firstImg) {
-              firstImg.scrollIntoView({ behavior: 'auto', inline: 'start' });
+            const imgScroller = document.querySelector('.gm-style-iw #img-scroller');
+            if (imgScroller) {
+              imgScroller.scrollLeft = 0;
             }
           });
         }, 0);
@@ -795,9 +795,9 @@ document.addEventListener("click", (e) => {
         // 스크롤 초기화 (DOM 렌더링 후 첫 이미지로 이동)
         setTimeout(() => {
           requestAnimationFrame(() => {
-            const firstImg = document.querySelector('.gm-style-iw #first-img');
-            if (firstImg) {
-              firstImg.scrollIntoView({ behavior: 'auto', inline: 'start' });
+            const imgScroller = document.querySelector('.gm-style-iw #img-scroller');
+            if (imgScroller) {
+              imgScroller.scrollLeft = 0;
             }
           });
         }, 0);
