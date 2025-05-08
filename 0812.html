@@ -570,10 +570,8 @@ button:hover {
         document.getElementById("sidebar").classList.remove("open");
         map.panTo(new google.maps.LatLng(data.lat, data.lng));
         infoWindow.close();
-        // 1. 이미지 미리 로딩
-  let loaded = 0;
+        let loaded = 0;
   const imageCount = data.imageUrls.length;
-  const preloadedImages = [];
 
   data.imageUrls.forEach((url, idx) => {
     const img = new Image();
@@ -581,9 +579,8 @@ button:hover {
     img.onload = () => {
       loaded++;
       if (loaded === imageCount) {
-        // 2. 모든 이미지 로드 완료 시점
-        const imagesHtml = data.imageUrls.map(url => `
-          <img src="${url}" style="
+        const imagesHtml = data.imageUrls.map((url, i) => `
+          <img src="${url}" ${i === 0 ? 'id="first-img"' : ''} style="
             flex: 0 0 100%;
             max-width: 100%;
             height: auto;
@@ -601,36 +598,33 @@ button:hover {
           touch-action: manipulation; 
           -webkit-overflow-scrolling: auto;
           font-family: '42dot Sans', sans-serif;">
-            <h4 style="
-              margin-top:0px;
-              margin-bottom:0px; 
-              font-size: 18px;">${data.title}</h4>
-            <p style="
-              margin-top:0px;
-              margin-bottom:8px; 
-              font-size: 14px;">${date.toISOString().slice(0, 10)}</p>
+            <h4 style="margin:0; font-size: 18px;">${data.title}</h4>
+            <p style="margin:0 0 8px; font-size: 14px;">${date.toISOString().slice(0, 10)}</p>
             <div id="img-scroller" style="
               display: flex;
               overflow-x: auto;
               scroll-snap-type: x mandatory;
-              -webkit-overflow-scrolling: touch;">
+              -webkit-overflow-scrolling: touch;
+              scroll-behavior: auto;
+            ">
               ${imagesHtml}
             </div>
           </div>
         `;
 
-        // 3. content 설정 후 열기
         infoWindow.setContent(contentHtml);
         infoWindow.setPosition(new google.maps.LatLng(data.lat, data.lng));
         infoWindow.open(map);
 
-        // 4. scrollLeft 초기화 (DOM이 렌더링된 후)
+        // 스크롤 초기화 (DOM 렌더링 후 첫 이미지로 이동)
         setTimeout(() => {
           requestAnimationFrame(() => {
-    const scroller = document.querySelector('.gm-style-iw #img-scroller');
-    if (scroller) scroller.scrollLeft = 0;
-  });
-        }, 50); // 거의 동시에 처리해도 부자연스럽지 않음
+            const firstImg = document.querySelector('.gm-style-iw #first-img');
+            if (firstImg) {
+              firstImg.scrollIntoView({ behavior: 'auto', inline: 'start' });
+            }
+          });
+        }, 0);
       }
     };
   });
@@ -752,10 +746,8 @@ document.addEventListener("click", (e) => {
       div.addEventListener("click", () => {
   infoWindow.close(); // 기존 infoWindow 닫기
 
-  // 1. 이미지 미리 로딩
   let loaded = 0;
   const imageCount = imageUrls.length;
-  const preloadedImages = [];
 
   imageUrls.forEach((url, idx) => {
     const img = new Image();
@@ -763,9 +755,8 @@ document.addEventListener("click", (e) => {
     img.onload = () => {
       loaded++;
       if (loaded === imageCount) {
-        // 2. 모든 이미지 로드 완료 시점
-        const imagesHtml = imageUrls.map(url => `
-          <img src="${url}" style="
+        const imagesHtml = imageUrls.map((url, i) => `
+          <img src="${url}" ${i === 0 ? 'id="first-img"' : ''} style="
             flex: 0 0 100%;
             max-width: 100%;
             height: auto;
@@ -783,40 +774,38 @@ document.addEventListener("click", (e) => {
           touch-action: manipulation; 
           -webkit-overflow-scrolling: auto;
           font-family: '42dot Sans', sans-serif;">
-            <h4 style="
-              margin-top:0px;
-              margin-bottom:0px; 
-              font-size: 18px;">${title}</h4>
-            <p style="
-              margin-top:0px;
-              margin-bottom:8px; 
-              font-size: 14px;">${date_val.toISOString().slice(0, 10)}</p>
+            <h4 style="margin:0; font-size: 18px;">${title}</h4>
+            <p style="margin:0 0 8px; font-size: 14px;">${date_val.toISOString().slice(0, 10)}</p>
             <div id="img-scroller" style="
               display: flex;
               overflow-x: auto;
               scroll-snap-type: x mandatory;
-              -webkit-overflow-scrolling: touch;">
+              -webkit-overflow-scrolling: touch;
+              scroll-behavior: auto;
+            ">
               ${imagesHtml}
             </div>
           </div>
         `;
 
-        // 3. content 설정 후 열기
         infoWindow.setContent(contentHtml);
         infoWindow.setPosition(new google.maps.LatLng(lat, lng));
         infoWindow.open(map);
 
-        // 4. scrollLeft 초기화 (DOM이 렌더링된 후)
+        // 스크롤 초기화 (DOM 렌더링 후 첫 이미지로 이동)
         setTimeout(() => {
           requestAnimationFrame(() => {
-    const scroller = document.querySelector('.gm-style-iw #img-scroller');
-    if (scroller) scroller.scrollLeft = 0;
-  });
-        }, 50); // 거의 동시에 처리해도 부자연스럽지 않음
+            const firstImg = document.querySelector('.gm-style-iw #first-img');
+            if (firstImg) {
+              firstImg.scrollIntoView({ behavior: 'auto', inline: 'start' });
+            }
+          });
+        }, 0);
       }
     };
   });
 });
+
 
 
       const overlay = new google.maps.OverlayView();
