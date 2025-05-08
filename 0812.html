@@ -626,8 +626,10 @@ button:hover {
 
         // 4. scrollLeft 초기화 (DOM이 렌더링된 후)
         setTimeout(() => {
-          const scroller = document.querySelector('.gm-style-iw #img-scroller');
-          if (scroller) scroller.scrollLeft = 0;
+          requestAnimationFrame(() => {
+    const scroller = document.querySelector('.gm-style-iw #img-scroller');
+    if (scroller) scroller.scrollLeft = 0;
+  });
         }, 0); // 거의 동시에 처리해도 부자연스럽지 않음
       }
     };
@@ -806,8 +808,10 @@ document.addEventListener("click", (e) => {
 
         // 4. scrollLeft 초기화 (DOM이 렌더링된 후)
         setTimeout(() => {
-          const scroller = document.querySelector('.gm-style-iw #img-scroller');
-          if (scroller) scroller.scrollLeft = 0;
+          requestAnimationFrame(() => {
+    const scroller = document.querySelector('.gm-style-iw #img-scroller');
+    if (scroller) scroller.scrollLeft = 0;
+  });
         }, 0); // 거의 동시에 처리해도 부자연스럽지 않음
       }
     };
