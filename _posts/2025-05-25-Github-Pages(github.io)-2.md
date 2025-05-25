@@ -73,11 +73,11 @@ VSCode에서 색상 코드 왼쪽의 네모 칸을 누르면 직접 색상을 �
 
 저는 기본 폰트로 42dot Sans를 선택했고, 블로그 이름용 폰트로 Playfair Display 폰트를 선택했습니다.
 
-![placehorder](/imgs/github25.jpg)
+![placehorder](/imgs/github25.JPG)
 
 선택을 완료했다면 오른쪽 위의 쇼핑백(?) 버튼을 누르고, 본인이 선택한 폰트들을 확인 후, "Get embed code" 버튼을 눌러주세요.
 
-![placehorder](/imgs/github26.jpg)
+![placehorder](/imgs/github26.JPG)
 
 그리고 첫번째 코드 블럭 내의 코드를 복사해주세요.
 
@@ -85,7 +85,7 @@ VSCode에서 색상 코드 왼쪽의 네모 칸을 누르면 직접 색상을 �
 
 복사한 코드를 <strong>_includes/font-includes.html</strong>에 붙여넣어 주세요.
 
-![placehorder](/imgs/github27.jpg)
+![placehorder](/imgs/github27.JPG)
 
 이를 통해, 웹페이지가 로드될 때 해당 폰트들이 같이 로드될 수 있도록 만들어주었습니다.
 
@@ -99,13 +99,13 @@ $root-font-family에 여러 폰트들이 나열되어 있는데, 앞선 폰트�
 
 저는 Google Fonts에서 받아온 '42dot Sans'를 맨 앞에 추가해 주었습니다.
 
-![placehorder](/imgs/github28.jpg)
+![placehorder](/imgs/github28.JPG)
 
 그리고 블로그 이름용 폰트는 <strong>_sass/hydeout/_layout.scss</strong>에서 #sidebar 내의 .site-title 부분에 다음과 같은 코드를 추가해주는 식으로 수정해주었습니다.
 
 이 코드를 통해서 폰트, 글자 크기, 글자 두께, 글자 스타일을 설정할 수 있습니다.
 
-![placehorder](/imgs/github29.jpg)
+![placehorder](/imgs/github29.JPG)
 
 <br>
 
@@ -115,7 +115,7 @@ $root-font-family에 여러 폰트들이 나열되어 있는데, 앞선 폰트�
 
 이에 대한 코드는 <strong>_includes/sidebar-nav-links.html</strong>에서 확인해볼 수 있는데요.
 
-![placehorder](/imgs/github30.jpg)
+![placehorder](/imgs/github30.JPG)
 
 코드를 보면 크게 다섯 부분으로 이루어져 있습니다.
 
@@ -187,7 +187,7 @@ sidebar_link: true
 
 이 페이지의 랜더링 결과는 다음과 같이 나타나게 됩니다.
 
-![placehorder](/imgs/github31.jpg)
+![placehorder](/imgs/github31.JPG)
 
 참고로, 이 코드에서 인식하는 '카테고리'는 게시글의 상단(Front-matter)에 입력한 'categories'에 의해 결정됩니다.
 
@@ -219,11 +219,11 @@ sidebar_link: true
 
 그래서 저는 인터넷에서 유튜브 로고 svg 파일을 다운받고, 'Inkscape'라는 프로그램으로 크기 조절을 해서 _includes/svg/에 추가해 주었습니다.
 
-![placehorder](/imgs/github32.jpg)
+![placehorder](/imgs/github32.JPG)
 
 그리고 코드 내의 site.author.github, site.author.youtube는 <strong>config.yml</strong>에 작성해 주었습니다.
 
-![placehorder](/imgs/github33.jpg)
+![placehorder](/imgs/github33.JPG)
 
 이로써, Github 아이콘과 Youtube 아이콘은 제가 의도한 대로, 클릭 시 각각의 페이지로 연결될 것입니다.
 
@@ -252,7 +252,7 @@ sidebar_link: true
 
 2. _layouts/ 내의 'search.html'를 삭제하고, 'default.html' 내에 '{% raw %}{% include search.html %}{% endraw %}' 추가(여기서 search.html은 앞에서 만든 파일입니다.)
 이를 통해, search.html의 내용이 모든 페이지에 삽입되게 됩니다.
-![placehorder](/imgs/github34.jpg)
+![placehorder](/imgs/github34.JPG)
 
 3. _sass/hydeout/_layout.scss 내의 .container 선택자 내에 다음 코드를 추가합니다.
 
@@ -446,7 +446,7 @@ favicon은 웹 브라우저 탭, 북마크 등등에 웹사이트 이름과 함�
 
 아래 사진 속 동그라미 친 아이콘이 favicon의 예시입니다.
 
-![placehorder](/imgs/github35.jpg)
+![placehorder](/imgs/github35.JPG)
 
 Hydeout의 기본 favicon은 사진에서 나온대로 H 모양의 아이콘인데요.
 
@@ -492,21 +492,21 @@ bundle exec jekyll serve
 
 그리고 본인이 커스터마이징하고 싶은 요소가 있는 페이지로 이동합니다.
 
-![placehorder](/imgs/github36.jpg)
+![placehorder](/imgs/github36.JPG)
 
 저는 예를 들어, 메인 페이지에서 게시글의 카테고리(Tutorial)를 나타내는 색상을 빨간색으로 수정하고 싶다고 해보겠습니다.
 
 그렇다면, 여기서 <strong>F12</strong>를 눌러서 '개발자 도구'를 열어주세요.
 
-![placehorder](/imgs/github37.jpg)
+![placehorder](/imgs/github37.JPG)
 
 그리고 왼쪽 위의 버튼을 눌러서, 화면 상의 원하는 요소를 클릭해주세요.
 
-![placehorder](/imgs/github38.jpg)
+![placehorder](/imgs/github38.JPG)
 
 그러면 개발자 도구 아래 부분에, 해당 요소에 적용된 스타일들이 전부 나오게 됩니다.
 
-![placehorder](/imgs/github39.jpg)
+![placehorder](/imgs/github39.JPG)
 
 적용된 스타일 중 'a 선택자'에 파란색 컬러를 적용하는 부분을 확인할 수 있습니다.
 
@@ -514,25 +514,25 @@ bundle exec jekyll serve
 
 그리고 오른쪽 네모 박스를 보면, 이러한 스타일이 작성된 코드가 '_base.scss' 파일의 46번 라인에 위치함을 알 수 있습니다.
 
-![placehorder](/imgs/github40.jpg)
+![placehorder](/imgs/github40.JPG)
 
 실제로 '_sass/hydeout/_base.scss'의 46번 라인을 찾아본 결과, a 선택자에 대한 스타일이 작성되어 있었고, 그 색상은 $link-color에 담겨있는 것을 확인할 수 있었습니다.
 
 VSCode에서 프로젝트 파일 중 '$link-color'에 대한 코드를 찾아보려면, 상단의 검색 창에서 '%'와 함께 원하는 문자열을 입력해보면 됩니다.
 
-![placehorder](/imgs/github41.jpg)
+![placehorder](/imgs/github41.JPG)
 
 검색 결과, '_variables.scss'에서 $link-color를 $blue로 지정하는 코드를 발견할 수 있습니다.
 
 해당 검색 결과를 클릭해서, 그 코드로 이동해 보겠습니다.
 
-![placehorder](/imgs/github42.jpg)
+![placehorder](/imgs/github42.JPG)
 
 이 코드에서 $blue를 $red로 수정하여, 하이퍼링크(a 태그)가 빨간색 글씨로 나타나도록 커스터마이징 해보겠습니다.
 
 $red로 수정하고 저장한 후, 로컬 환경의 기존 웹 사이트를 새로고침해보면, 다음과 같이 하이퍼링크 글씨가 빨간색으로 나오는 것을 확인할 수 있습니다.
 
-![placehorder](/imgs/github43.jpg)
+![placehorder](/imgs/github43.JPG)
 
 이런 방식으로 개발자 도구(F12)의 기능과 VSCode 내 검색 기능을 활용하면, 손쉽게 원하는 요소의 스타일을 변경할 수 있으실 겁니다!
 
