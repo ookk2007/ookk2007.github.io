@@ -257,7 +257,7 @@ Github 페이지에서 <strong>Code</strong> 버튼을 누르고, <strong>Downlo
 * author->name: 본인의 이름.
 * author->url: 본인을 대표하는 사이트 URL. (저는 github 프로필 링크를 적었습니다.)
 * <strong>remote_theme: fongandrew/hydeout</strong> 라는 텍스트를 추가해주세요.
-* (선택사항) 메인 페이지에서 게시글의 내용이 간략히 나오기를 원한다면, <strong>excerpt_separator: \<!--more--></strong> 라는 텍스트를 추가해주세요.
+* (선택사항) 메인 페이지에서 게시글의 내용이 간략히 나오기를 원한다면, <strong>excerpt_separator: &#60;&#33;&#45;&#45;more&#45;&#45;&#62;</strong> 라는 텍스트를 추가해주세요.
 * (선택사항) 왼쪽 사이드바에 웹사이트 버전을 출력하고 싶다면, <strong>version: X.X.X</strong> 라는 텍스트를 추가해주세요.(X 안에는 임의의 숫자를 넣어주세요.)
 
 실제로 제가 수정한 내용은 다음과 같습니다.
