@@ -558,6 +558,7 @@ $red로 수정하고 저장한 후, 로컬 환경의 기존 웹 사이트를 새
 
 ## 9. 참고 사이트
 
-<a href="https://yangxiaozhou.github.io/learning/2019/09/25/set-up-blog.html" target="_blank" rel="noopener noreferrer">https://yangxiaozhou.github.io/learning/2019/09/25/set-up-blog.html</a>
+<a href="https://yangxiaozhou.github.io/learning/2019/09/25/set-up-blog.html" target="_blank" rel="noopener noreferrer">https://yangxiaozhou.github.io/learning/
+2019/09/25/set-up-blog.html</a>
 
 <br>
