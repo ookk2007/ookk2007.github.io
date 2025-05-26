@@ -5,7 +5,7 @@ highlighter:      rouge
 # Setup
 title:            Archi-veD
 tagline:          by Jonghyeok Han
-description:      'An archive of my <a href="/category/learning">learning</a>, <a href="/category/dev-log">dev logs</a>, and <a href="/category/tutorial">tutorials</a>.'
+description:      'An archive of my <a href="/category/learning">learning</a>, <a href="/category/dev-log">dev logs</a>, <a href="/category/tutorial">tutorials</a>, and <a href="/category/life">life</a>.'
 url:              https://ookk2007.github.io
 baseurl:          ''
                   # the optional subpath of your site, e.g. "/blog"
