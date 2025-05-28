@@ -104,7 +104,7 @@ tags: Hyundai Employment Interview
 
 제가 지원한 직무는 '5분 분량의 자기소개 PPT'를 만들어 발표하는 사전 과제가 있었습니다.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Po__JFWKH_A?si=VO4C6A8H62jyrZh9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/Po__JFWKH_A?si=VO4C6A8H62jyrZh9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 저는 PPT 제작에 이 영상을 많이 참고했습니다!
 
@@ -152,7 +152,7 @@ PPT 제작 이후에는, 자동차 관련 지식, 자동차 산업 동향, 미�
 
 저는 1차 면접 때 준비한 자료들에, 임원 면접용 질문들을 추가해서 면접을 준비했습니다.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DGkLJJXA0oE?si=oVsslWFdv6CA7a-E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/DGkLJJXA0oE?si=oVsslWFdv6CA7a-E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 제가 유튜브에서 면접 관련 영상들을 많이 찾아보다 보니, 어느새 알고리즘까지 잠식을 당해버렸는데요..
 
