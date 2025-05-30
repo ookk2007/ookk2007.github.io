@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 현대자동차 최종 합격 후기
+title: 현대자동차 파이롯트개발 신입 최종 합격 후기
 date: '2025-05-26 15:40:23 +0900'
 categories: Life
 tags: Hyundai Employment Interview
