@@ -8,12 +8,13 @@ sidebar_link: true
   <strong>
   이름(Name): 한종혁(Jonghyeok Han)<br>
   이메일(email): <a href='mailto:ookk2007@naver.com' >ookk2007@naver.com</a><br>
-  학력(Education): 고려대학교 컴퓨터학과 졸업예정<br>(Korea University, Department of Computer Science and Engineering)
+  학력(Education): 고려대학교 컴퓨터학과 학사<br>(Korea University, Department of Computer Science and Engineering)<br>
+  경력(Work Experience): 삼성전자 인턴(Samsung Electronics, Intern; 2024.09. - 2024.12.),<br> 현대자동차 파이롯트개발(Hyundai Motor Group; 2025.07. - )
   </strong>
 </p>
 
 안녕하세요. 저는 세상에 도움을 주고 싶은 개발자 한종혁입니다. <br>
-현재 고려대학교 컴퓨터학과, 정보보호융합전공 졸업을 앞두고 있으며, 수많은 사람들에게 도움을 주는 회사에 입사하기 위해 노력하고 있습니다.
+고려대학교에서 컴퓨터학, 정보보호학을 전공하였으며, <br>수많은 사람들에게 도움을 주는 일을 하고 싶다는 사명감을 갖고 현대자동차에 입사했습니다.
 
 저는 주로 정보보호 분야, 특히 리버스 엔지니어링, 시스템 프로그래밍을 공부해왔지만, 다른 분야에도 관심을 갖고 공부해왔습니다. <br>
 아래에서 제가 관심을 갖고 공부해본 모든 분야를 소개해드리겠습니다.
@@ -30,7 +31,9 @@ sidebar_link: true
 <br>
 
 <br>
-Hi, I'm Jonghyeok Han, a developer who wants to make a positive impact on the world. <br>I am currently about to graduate from Korea University with a major in Computer Science and a double major in Information Security Convergence. <br>I am working hard to join a company that helps countless people.
+Hi, I'm Jonghyeok Han, a developer who wants to make a positive impact on the world. <br>I majored in computer science and information security at Korea University and joined Hyundai Motor Group with a mission to help a lot of people.
+
+<br>
 
 I have primarily studied the field of information security, especially reverse engineering and system programming. <br>However, I have also explored various other fields out of curiosity and interest. <br>Below, I will introduce all the areas I have studied.
 
