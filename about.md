@@ -9,7 +9,7 @@ sidebar_link: true
   이름(Name): 한종혁(Jonghyeok Han)<br>
   이메일(email): <a href='mailto:ookk2007@naver.com' >ookk2007@naver.com</a><br>
   학력(Education): 고려대학교 컴퓨터학과 학사<br>(Korea University, Department of Computer Science and Engineering)<br>
-  경력(Work Experience): 삼성전자 인턴(Samsung Electronics, Intern; 2024.09. - 2024.12.),<br> 현대자동차 파이롯트개발(Hyundai Motor Group; 2025.07. - )
+  경력(Work Experience): 삼성전자 인턴(Samsung Electronics, Intern; 2024.09. - 2024.12.), 현대자동차 파이롯트개발(Hyundai Motor Group; 2025.07. - )
   </strong>
 </p>
 
