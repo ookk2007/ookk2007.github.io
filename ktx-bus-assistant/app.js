@@ -5,15 +5,15 @@
 
   const MODES = {
     rail: {
-      label: "KTX",
-      shortLabel: "KTX",
+      label: "코레일 열차",
+      shortLabel: "철도",
       provider: "Korail",
       officialUrl: "https://www.letskorail.com",
-      source: "코레일 공개 계획 시간표 기반 데모",
+      source: "코레일 공개 계획 시간표를 바탕으로 만든 KTX 예시 데이터",
       stations: ["서울", "광명", "천안아산", "대전", "동대구", "부산", "용산", "전주", "광주송정", "목포"],
       defaults: ["서울", "부산"],
-      noticeTitle: "KTX는 계획 시간표 조회만 지원해요.",
-      noticeCopy: "참고 스킬에는 실시간 잔여석·자동 재조회·좌석 선점 기능이 없습니다.",
+      noticeTitle: "공개 데모는 KTX 예시 시간표를 보여줘요.",
+      noticeCopy: "베타 앱에서는 KTX·ITX-새마을·ITX-마음·무궁화·ITX-청춘·관광열차 조건을 등록할 수 있지만, 실시간 잔여석 조회는 아직 비활성입니다.",
       schedules: [
         { id: "ktx-117", time: "15:48", arrival: "18:24", service: "KTX 117", detail: "KTX · 일반실", price: "운임은 공식 사이트 확인", status: "schedule-only" },
         { id: "ktx-121", time: "18:42", arrival: "21:19", service: "KTX 121", detail: "KTX · 일반실", price: "운임은 공식 사이트 확인", status: "schedule-only" },
@@ -28,8 +28,8 @@
       source: "KOBUS 조회 흐름을 본뜬 데모 데이터",
       stations: ["서울경부", "센트럴시티", "동서울", "부산", "광주(유·스퀘어)", "대전복합", "대구", "강릉", "전주고속", "울산"],
       defaults: ["서울경부", "부산"],
-      noticeTitle: "KOBUS와 연결되면 잔여석 확인부터 임시 선점까지 이어져요.",
-      noticeCopy: "현재는 성인 1명 기준 제품 흐름 데모이며 실제 요청·좌석 선점은 실행되지 않습니다.",
+      noticeTitle: "KOBUS·티머니GO 공식 연동을 검토하고 있어요.",
+      noticeCopy: "현재는 성인 1명 기준 화면 흐름 데모이며, 실제 잔여석 요청·좌석 확보·예매는 실행되지 않습니다.",
       schedules: [
         { id: "express-1530", time: "15:30", arrival: "19:40", service: "천일고속", detail: "우등", price: "성인 39,700원 · 예시", status: "sold-out" },
         { id: "express-1740", time: "17:40", arrival: "21:50", service: "금호고속", detail: "프리미엄", price: "성인 51,600원 · 예시", status: "available", seats: 2 },
@@ -44,8 +44,8 @@
       source: "Tmoney 시외버스 조회 흐름을 본뜬 데모 데이터",
       stations: ["동서울", "서울남부", "인천", "수원", "속초", "춘천", "원주", "청주", "포항", "안동"],
       defaults: ["동서울", "속초"],
-      noticeTitle: "Tmoney 시외버스는 고속버스와 별도 흐름으로 다뤄요.",
-      noticeCopy: "터미널 코드·세션·결제 진입 방식이 달라 서로 섞지 않으며, 현재 화면은 데모입니다.",
+      noticeTitle: "티머니GO·시외버스 공식 연동을 검토하고 있어요.",
+      noticeCopy: "터미널 코드와 예매 흐름이 달라 별도 어댑터가 필요합니다. 현재는 실제 요청이 없는 화면 데모입니다.",
       schedules: [
         { id: "intercity-1520", time: "15:20", arrival: "17:40", service: "금강고속", detail: "우등", price: "성인 21,300원 · 예시", status: "sold-out" },
         { id: "intercity-1800", time: "18:00", arrival: "20:20", service: "강원고속", detail: "일반", price: "성인 17,200원 · 예시", status: "sold-out" },
@@ -289,7 +289,7 @@
     elements.searchButton.disabled = true;
     elements.searchButton.innerHTML = `
       <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 1-5.7 2.4"></path></svg>
-      확인 중
+      데모 불러오는 중
     `;
   }
 
@@ -349,10 +349,10 @@
     state.lastDialogTrigger = trigger;
     const search = state.search;
     const config = MODES[search.mode];
-    elements.dialogTitle.textContent = search.mode === "rail" ? "조회 조건을 저장할까요?" : "이 편을 지켜볼까요?";
+    elements.dialogTitle.textContent = "데모 조건을 저장할까요?";
     elements.dialogLead.textContent = search.mode === "rail"
-      ? "실시간 감시가 아닌 KTX 데모 조건으로 저장됩니다."
-      : "선택한 매진편을 모니터 조건으로 저장합니다.";
+      ? "실시간 감시가 아닌 코레일 열차 화면 체험용 조건으로 저장됩니다."
+      : "실제 좌석 조회 없이 선택한 편을 화면 체험용 조건으로 저장합니다.";
     elements.dialogTrip.innerHTML = tripMarkup(search, schedule, config);
     elements.includeNearby.checked = true;
     elements.seatPreference.value = "any";
@@ -444,10 +444,10 @@
       : monitor.status === "seat-detected"
         ? "빈자리 발견 데모"
         : monitor.status === "action-required"
-          ? "임시 확보 데모"
+          ? "빈자리 알림 시뮬레이션"
           : isRail
             ? "조건 저장됨"
-            : "모니터링 데모";
+            : "조건 활성 · 데모";
     const cardClass = actionRequired ? "is-action-required" : monitor.status === "paused" ? "is-paused" : "";
     const icon = isRail ? trainIcon() : busIcon();
     const primaryAction = actionRequired
@@ -474,7 +474,7 @@
           <div class="monitor-route-point"><strong>${escapeHtml(monitor.arrival)}</strong><span>${escapeHtml(monitor.arrivalTime)}</span></div>
         </div>
         <dl class="monitor-meta">
-          <div><dt>현재 상태</dt><dd>${actionRequired ? (isRail ? "공식 확인 필요" : "결제 단계 확인 필요") : monitor.status === "paused" ? "확인 중지됨" : "브라우저 데모 대기"}</dd></div>
+          <div><dt>현재 상태</dt><dd>${actionRequired ? "공식 사이트 확인 필요" : monitor.status === "paused" ? "확인 중지됨" : "브라우저 데모 대기"}</dd></div>
           <div><dt>최근 확인</dt><dd>${formatRelative(monitor.lastCheckedAt)}</dd></div>
           <div><dt>조건</dt><dd>${monitor.includeNearby ? "앞뒤 30분 포함" : "선택편만"} · ${monitor.passengers}명</dd></div>
         </dl>
@@ -538,19 +538,19 @@
   function openResultDialog(monitor) {
     const config = MODES[monitor.mode];
     const isRail = monitor.mode === "rail";
-    elements.resultDialogKicker.textContent = isRail ? "KTX DEMO EVENT" : "HOLD FLOW DEMO";
-    elements.resultDialogTitle.textContent = isRail ? "빈자리 감지 상황을 시뮬레이션했어요" : "좌석 임시 확보를 시뮬레이션했어요";
+    elements.resultDialogKicker.textContent = isRail ? "RAIL DEMO EVENT" : "BUS DEMO EVENT";
+    elements.resultDialogTitle.textContent = "빈자리 알림 상황을 시뮬레이션했어요";
     elements.resultDialogCopy.textContent = isRail
       ? "실시간 좌석 조회가 아닌 화면 체험용 이벤트입니다."
-      : "실제 KOBUS·Tmoney 요청이나 좌석 선점은 실행되지 않았습니다.";
+      : "실제 KOBUS·티머니GO 요청이나 좌석 확보는 실행되지 않았습니다.";
     elements.resultDialogTrip.innerHTML = tripMarkup(
       { mode: monitor.mode, departure: monitor.departure, arrival: monitor.arrival, date: monitor.date },
       { time: monitor.time, service: monitor.service },
       config,
     );
     elements.resultDialogWarning.innerHTML = isRail
-      ? "<strong>자동 선점은 실행되지 않았습니다.</strong>참고한 KTX 스킬은 계획 시간표 조회 전용입니다. 코레일 공식 사이트에서 잔여석을 직접 확인해 주세요."
-      : "<strong>결제 전에는 예매가 확정되지 않습니다.</strong>실제 연동에서 임시 확보가 확인되면 공식 페이지에서 즉시 결제를 마쳐야 하며, 정확한 만료 시각은 공식 응답이 있을 때만 표시합니다.";
+      ? "<strong>자동 예매는 실행되지 않았습니다.</strong>참고한 railway-timetable 스킬은 계획 시간표 조회 전용입니다. 코레일 공식 사이트에서 잔여석을 직접 확인해 주세요."
+      : "<strong>실제 좌석을 확보한 결과가 아닙니다.</strong>향후 공식 연동에서 좌석 확보가 확인되더라도, 공식 페이지에서 사용자가 직접 결제해야 예매가 확정됩니다.";
     elements.officialLink.href = config.officialUrl;
     const officialLabel = isRail ? "코레일 홈페이지 열기" : `${config.provider} 홈페이지 열기`;
     const newWindowHint = document.createElement("span");
@@ -566,13 +566,13 @@
 
   function updateNotificationPreview(monitor) {
     const isRail = monitor.mode === "rail";
-    elements.previewTitle.textContent = isRail ? "빈자리 감지 데모" : "좌석 임시 확보 데모";
+    elements.previewTitle.textContent = "빈자리 알림 데모";
     elements.previewRoute.textContent = `${monitor.departure} → ${monitor.arrival}, ${monitor.time} 출발 · ${isRail ? "공식 사이트에서 직접 확인해 주세요." : "공식 홈페이지에서 좌석과 결제 단계를 다시 확인해 주세요."}`;
   }
 
   function resetNotificationPreview() {
-    elements.previewTitle.textContent = "좌석을 임시 확보했어요";
-    elements.previewRoute.textContent = "선택한 노선의 결제 단계가 준비되면 이렇게 알려드려요.";
+    elements.previewTitle.textContent = "공식 연동 후 제공";
+    elements.previewRoute.textContent = "승인된 알림톡 연동이 준비되면 이런 형태로 안내해요.";
   }
 
   function clearDemoData() {

@@ -1,7 +1,7 @@
 {
-  "name": "자리ON — KTX & 버스 예매 도우미",
+  "name": "자리ON — 기차·버스 예매 도우미",
   "short_name": "자리ON",
-  "description": "KTX·고속버스·시외버스 예매 도우미 프로토타입",
+  "description": "코레일 열차·고속버스·시외버스 모니터링 도우미 공개 소개 및 데모",
   "lang": "ko-KR",
   "start_url": "./",
   "scope": "./",
