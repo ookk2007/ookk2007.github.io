@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="매진된 KTX·고속버스·시외버스의 원하는 시간대를 다시 확인하고, 빈자리 발견부터 공식 예매처 재확인까지의 흐름을 체험하는 자리ON 프로토타입입니다."
+    />
+    <meta name="theme-color" content="#101c3a" />
+    <meta property="og:title" content="자리ON — KTX &amp; 버스 예매 도우미" />
+    <meta
+      property="og:description"
+      content="원하는 표가 돌아오는 순간을 놓치지 않도록. 결제는 공식 사이트에서 직접 진행합니다."
+    />
+    <title>자리ON — KTX &amp; 버스 예매 도우미</title>
+    <link rel="icon" href="./app-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./app.css?v=20261017" />
+    <script src="./app.js?v=20261017" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+
+    <header class="site-header">
+      <div class="shell nav-shell">
+        <a class="brand" href="#top" aria-label="자리ON 홈">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </span>
+          <span>자리<span class="brand-accent">ON</span></span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="주요 메뉴">
+          <a href="#search">시간표 찾기</a>
+          <a href="#monitors">모니터링</a>
+          <a href="#guide">이용 안내</a>
+        </nav>
+
+        <a class="nav-cta" href="#search">
+          조건 만들기
+          <svg aria-hidden="true" viewBox="0 0 20 20">
+            <path d="M4 10h11M11 6l4 4-4 4" />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="top">
+        <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+        <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">
+              <span class="pulse-dot" aria-hidden="true"></span>
+              KTX · 고속버스 · 시외버스
+              <span class="prototype-chip">PROTOTYPE</span>
+            </div>
+            <h1>
+              매진이어도,<br />
+              <span>이동은 멈추지 않게.</span>
+            </h1>
+            <p class="hero-lead">
+              원하는 시간대를 저장해 두면 빈자리 확인부터 좌석 확보, 공식 예매처 재확인까지
+              한 흐름으로 이어지는 예매 도우미를 미리 체험할 수 있어요.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#search">
+                시간표 찾아보기
+                <svg aria-hidden="true" viewBox="0 0 20 20">
+                  <path d="M4 10h11M11 6l4 4-4 4" />
+                </svg>
+              </a>
+              <a class="text-link" href="#guide">어떻게 작동하나요?</a>
+            </div>
+            <ul class="trust-list" aria-label="서비스 원칙">
+              <li>
+                <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 10 3 3 7-7" /></svg>
+                결제는 공식 사이트에서 직접
+              </li>
+              <li>
+                <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 10 3 3 7-7" /></svg>
+                카드·로그인 정보 수집 없음
+              </li>
+            </ul>
+          </div>
+
+          <div class="hero-board" aria-label="모니터링 화면 예시">
+            <div class="board-topline">
+              <div>
+                <span class="micro-label">MONITOR 01</span>
+                <strong>서울 <span aria-hidden="true">→</span> 광주</strong>
+              </div>
+              <span class="live-badge"><span aria-hidden="true"></span> 확인 중</span>
+            </div>
+
+            <div class="route-visual" aria-hidden="true">
+              <span class="route-city route-city-start">SEO</span>
+              <div class="route-line">
+                <span class="station-dot"></span>
+                <span class="moving-train">
+                  <svg viewBox="0 0 34 20">
+                    <path d="M4 15V6.5C4 4.6 5.6 3 7.5 3h19C28.4 3 30 4.6 30 6.5V15H4Z" />
+                    <path d="M8 7h18M9 15v3m16-3v3M9 11h.01M25 11h.01" />
+                  </svg>
+                </span>
+                <span class="station-dot"></span>
+              </div>
+              <span class="route-city route-city-end">GWJ</span>
+            </div>
+
+            <div class="board-ticket">
+              <div class="ticket-time">
+                <span>18:20</span>
+                <small>금호고속</small>
+              </div>
+              <div class="ticket-divider" aria-hidden="true"></div>
+              <div class="ticket-date">
+                <span id="hero-ticket-date">내일</span>
+                <small>프리미엄 1명</small>
+              </div>
+              <div class="ticket-status">
+                <span class="status-dot status-dot-wait"></span>
+                잔여 0석
+              </div>
+            </div>
+
+            <div class="activity-row">
+              <div class="activity-time">방금 전</div>
+              <div class="activity-line" aria-hidden="true"><span></span></div>
+              <div class="activity-copy">
+                <strong>최근 확인 완료</strong>
+                <span>공식 조회 흐름 · 이상 없음</span>
+              </div>
+            </div>
+
+            <div class="notification-preview" aria-label="카카오 알림톡 예시">
+              <div class="kakao-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 4c5 0 9 3 9 6.8 0 3.7-4 6.8-9 6.8-.8 0-1.6-.1-2.3-.2L6 20l1-3.5c-2.4-1.2-4-3.3-4-5.7C3 7 7 4 12 4Z" />
+                </svg>
+              </div>
+              <div>
+                <span>알림 미리보기</span>
+                <strong>좌석을 확보했어요!</strong>
+                <p>공식 홈페이지에서 좌석과 결제 단계를 다시 확인해 주세요.</p>
+              </div>
+            </div>
+            <p class="board-caption">* 위 화면은 실제 예약이 아닌 제품 흐름 예시입니다.</p>
+          </div>
+        </div>
+
+        <div class="shell flow-strip" aria-label="서비스 이용 순서">
+          <div class="flow-step">
+            <span>01</span>
+            <div><strong>조건 저장</strong><small>노선과 시간대를 선택</small></div>
+          </div>
+          <svg class="flow-arrow" aria-hidden="true" viewBox="0 0 32 16"><path d="M2 8h26m-5-5 5 5-5 5" /></svg>
+          <div class="flow-step">
+            <span>02</span>
+            <div><strong>빈자리 확인</strong><small>연결된 공식 흐름을 점검</small></div>
+          </div>
+          <svg class="flow-arrow" aria-hidden="true" viewBox="0 0 32 16"><path d="M2 8h26m-5-5 5 5-5 5" /></svg>
+          <div class="flow-step">
+            <span>03</span>
+            <div><strong>임시 좌석 확보</strong><small>지원되는 버스편에 한함</small></div>
+          </div>
+          <svg class="flow-arrow" aria-hidden="true" viewBox="0 0 32 16"><path d="M2 8h26m-5-5 5 5-5 5" /></svg>
+          <div class="flow-step">
+            <span>04</span>
+            <div><strong>직접 결제</strong><small>공식 사이트에서 마무리</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="search-section section" id="search">
+        <div class="shell">
+          <div class="section-heading split-heading">
+            <div>
+              <span class="section-kicker">TRY THE FLOW</span>
+              <h2>원하는 이동편을 찾아보세요</h2>
+              <p>세 교통수단의 시간표 검색과 모니터 조건 저장 흐름을 데모 데이터로 체험할 수 있어요.</p>
+            </div>
+            <div class="demo-notice">
+              <svg aria-hidden="true" viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="8" />
+                <path d="M10 9v5m0-8v.2" />
+              </svg>
+              <div><strong>현재 데모 모드</strong><span>실제 좌석 조회·선점·알림은 실행되지 않아요.</span></div>
+            </div>
+          </div>
+
+          <div class="search-workspace">
+            <div class="transport-tabs" role="tablist" aria-label="교통수단 선택">
+              <button class="transport-tab is-active" id="tab-rail" type="button" role="tab" aria-selected="true" aria-controls="search-panel" data-mode="rail">
+                <span class="transport-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M7 17 5 21m12-4 2 4M6 15V7c0-3 2-4 6-4s6 1 6 4v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2Zm0-5h12M9 13h.01M15 13h.01" /></svg>
+                </span>
+                <span><strong>KTX</strong><small>계획 시간표</small></span>
+              </button>
+              <button class="transport-tab" id="tab-express" type="button" role="tab" aria-selected="false" aria-controls="search-panel" data-mode="express" tabindex="-1">
+                <span class="transport-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 16V7c0-2 1.5-3 3.5-3h7C17.5 4 19 5 19 7v9m-14-5h14M7 16v2m10-2v2M7.5 8h9M8 14h.01M16 14h.01" /></svg>
+                </span>
+                <span><strong>고속버스</strong><small>KOBUS</small></span>
+              </button>
+              <button class="transport-tab" id="tab-intercity" type="button" role="tab" aria-selected="false" aria-controls="search-panel" data-mode="intercity" tabindex="-1">
+                <span class="transport-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 16V7c0-2 1.5-3 4-3h8c2.5 0 4 1 4 3v9m-16-5h16M7 16v2m10-2v2M7 8h10M8 14h.01M16 14h.01" /></svg>
+                </span>
+                <span><strong>시외버스</strong><small>Tmoney</small></span>
+              </button>
+            </div>
+
+            <div class="search-panel" id="search-panel" role="tabpanel" aria-labelledby="tab-rail">
+              <div class="service-notice service-notice-rail" id="service-notice">
+                <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 2.8 18 17H2L10 2.8Z" /><path d="M10 8v4m0 2v.2" /></svg>
+                <div>
+                  <strong>KTX는 계획 시간표 조회만 지원해요.</strong>
+                  <span>참고 스킬에는 실시간 잔여석·자동 재조회·좌석 선점 기능이 없습니다.</span>
+                </div>
+              </div>
+
+              <form class="journey-form" id="journey-form">
+                <div class="route-fields">
+                  <label class="field-group" for="departure">
+                    <span>출발지</span>
+                    <select id="departure" name="departure"></select>
+                  </label>
+
+                  <button class="swap-button" id="swap-route" type="button" aria-label="출발지와 도착지 바꾸기" title="출발지와 도착지 바꾸기">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 7-3 3 3 3m-3-3h14m-1 7 3-3-3-3m3 3H6" /></svg>
+                  </button>
+
+                  <label class="field-group" for="arrival">
+                    <span>도착지</span>
+                    <select id="arrival" name="arrival"></select>
+                  </label>
+                </div>
+
+                <div class="detail-fields">
+                  <label class="field-group" for="travel-date">
+                    <span>가는 날</span>
+                    <input id="travel-date" name="travelDate" type="date" required />
+                  </label>
+                  <fieldset class="time-range">
+                    <legend>희망 출발 시간</legend>
+                    <label for="time-start">
+                      <span class="sr-only">시작 시간</span>
+                      <select id="time-start" name="timeStart">
+                        <option value="05:00">05:00</option>
+                        <option value="07:00">07:00</option>
+                        <option value="09:00">09:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="15:00" selected>15:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="20:00">20:00</option>
+                      </select>
+                    </label>
+                    <span class="range-dash" aria-hidden="true">–</span>
+                    <label for="time-end">
+                      <span class="sr-only">종료 시간</span>
+                      <select id="time-end" name="timeEnd">
+                        <option value="09:00">09:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="21:00" selected>21:00</option>
+                        <option value="23:59">23:59</option>
+                      </select>
+                    </label>
+                  </fieldset>
+                  <label class="field-group" for="passengers">
+                    <span>인원</span>
+                    <select id="passengers" name="passengers">
+                      <option value="1" selected>성인 1명</option>
+                      <option value="2">성인 2명</option>
+                      <option value="3">성인 3명</option>
+                      <option value="4">성인 4명</option>
+                    </select>
+                  </label>
+                  <button class="button button-search" type="submit">
+                    <svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5" /><path d="m13 13 4 4" /></svg>
+                    시간표 보기
+                  </button>
+                </div>
+                <p class="form-error" id="form-error" role="alert" hidden></p>
+              </form>
+            </div>
+          </div>
+
+          <section class="results-panel" id="results-panel" aria-labelledby="results-title" hidden>
+            <div class="results-topline">
+              <div>
+                <span class="section-kicker">DEMO RESULTS</span>
+                <h3 id="results-title">조회 결과</h3>
+              </div>
+              <div class="result-meta">
+                <span class="demo-watermark">DEMO DATA</span>
+                <span id="result-updated">방금 업데이트</span>
+              </div>
+            </div>
+            <div class="result-summary" id="result-summary"></div>
+            <div class="result-list" id="result-list" aria-live="polite"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="monitor-section section" id="monitors">
+        <div class="shell">
+          <div class="section-heading split-heading monitor-heading">
+            <div>
+              <span class="section-kicker section-kicker-light">MY MONITORS</span>
+              <h2>저장한 모니터링</h2>
+              <p>브라우저에 저장된 데모 조건을 확인하고, 빈자리 발견 상황을 직접 시뮬레이션해 보세요.</p>
+            </div>
+            <div class="monitor-count" aria-live="polite">
+              <span id="monitor-count">0</span>
+              <small>ACTIVE CONDITIONS</small>
+            </div>
+          </div>
+
+          <div class="monitor-layout">
+            <div class="monitor-list" id="monitor-list">
+              <div class="empty-state" id="monitor-empty">
+                <span class="empty-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><path d="M7 24V11c0-4 3-6 9-6s9 2 9 6v13M7 16h18M11 24l-2 4m12-4 2 4M11 20h.01M21 20h.01" /></svg>
+                </span>
+                <strong>아직 저장한 조건이 없어요</strong>
+                <p>시간표에서 매진된 편을 골라 모니터링 데모를 시작해 보세요.</p>
+                <a class="button button-ghost-light" href="#search">시간표 찾기</a>
+              </div>
+            </div>
+
+            <aside class="alert-demo" aria-label="알림톡 미리보기">
+              <div class="phone-frame">
+                <div class="phone-status" aria-hidden="true"><span>9:41</span><span>● ◒ ▰</span></div>
+                <div class="phone-header">
+                  <span class="kakao-mark">
+                    <svg viewBox="0 0 24 24"><path d="M12 4c5 0 9 3 9 6.8 0 3.7-4 6.8-9 6.8-.8 0-1.6-.1-2.3-.2L6 20l1-3.5c-2.4-1.2-4-3.3-4-5.7C3 7 7 4 12 4Z" /></svg>
+                  </span>
+                  <div><strong>자리ON</strong><small>알림톡 미리보기</small></div>
+                </div>
+                <div class="chat-date">오늘</div>
+                <div class="chat-bubble">
+                  <span class="chat-label">좌석 확보 알림</span>
+                  <strong id="preview-title">좌석을 임시 확보했어요</strong>
+                  <p id="preview-route">선택한 노선의 결제 단계가 준비되면 이렇게 알려드려요.</p>
+                  <div class="chat-divider"></div>
+                  <dl>
+                    <div><dt>상태</dt><dd>결제 필요</dd></div>
+                    <div><dt>안내</dt><dd>즉시 확인 권장</dd></div>
+                  </dl>
+                  <button type="button" tabindex="-1">공식 홈페이지에서 다시 확인</button>
+                </div>
+              </div>
+              <p>
+                <svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" /><path d="M10 9v5m0-8v.2" /></svg>
+                알림톡 발송은 아직 연결되지 않았습니다. 실제 서비스에는 별도 서버와 카카오 비즈메시지 연동이 필요해요.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section section" id="guide">
+        <div class="shell">
+          <div class="section-heading centered-heading">
+            <span class="section-kicker">CLEAR BY DESIGN</span>
+            <h2>찾기, 확보, 결제를 분명하게 나눴어요</h2>
+            <p>“자리가 보였다”와 “예매가 끝났다”는 전혀 다른 상태입니다. 자리ON은 그 사이를 숨기지 않아요.</p>
+          </div>
+
+          <div class="state-track" aria-label="예매 상태 단계">
+            <div class="state-item">
+              <span class="state-number">01</span>
+              <div><strong>시간표 확인</strong><p>출발·도착·운행 시각과 후보편을 찾습니다.</p></div>
+            </div>
+            <div class="state-connector" aria-hidden="true"></div>
+            <div class="state-item">
+              <span class="state-number">02</span>
+              <div><strong>빈자리 감지</strong><p>지원되는 연결에서 잔여 좌석 변화를 확인합니다.</p></div>
+            </div>
+            <div class="state-connector" aria-hidden="true"></div>
+            <div class="state-item">
+              <span class="state-number">03</span>
+              <div><strong>임시 확보</strong><p>버스편의 좌석을 짧게 확보한 뒤 결과를 검증합니다.</p></div>
+            </div>
+            <div class="state-connector" aria-hidden="true"></div>
+            <div class="state-item state-item-final">
+              <span class="state-number">04</span>
+              <div><strong>사용자 직접 결제</strong><p>공식 사이트에서 결제해야 예매가 확정됩니다.</p></div>
+            </div>
+          </div>
+
+          <div class="boundary-grid">
+            <article class="boundary-copy">
+              <span class="section-kicker">SERVICE BOUNDARIES</span>
+              <h3>교통수단마다<br />가능한 범위가 달라요</h3>
+              <p>
+                참고한 k-skill의 실제 지원 범위를 기준으로 화면과 상태를 분리했습니다. 서로 다른 버스 시스템의
+                터미널 코드와 세션을 섞지 않고, 차단·인증·CAPTCHA를 우회하지 않습니다.
+              </p>
+              <p class="usage-policy">
+                개인의 비조직적 조회만 전제로 하며 대량 수집·공격적 폴링·병렬 호출을 하지 않습니다. 제공처 약관·robots·속도 제한을 따르고, 차단 또는 rate-limit이 감지되면 즉시 중단합니다.
+              </p>
+              <a class="text-link dark-link" href="https://github.com/NomaDamas/k-skill" target="_blank" rel="noreferrer">참고한 k-skill 보기<span class="sr-only">(새 창)</span></a>
+            </article>
+
+            <div class="boundary-table" role="table" aria-label="교통수단별 지원 범위">
+              <div class="boundary-row boundary-head" role="row">
+                <span role="columnheader">교통수단</span>
+                <span role="columnheader">참고 스킬 범위</span>
+                <span role="columnheader">현재 화면</span>
+              </div>
+              <div class="boundary-row" role="row">
+                <span role="cell"><strong>KTX</strong><small>Korail</small></span>
+                <span role="cell">계획 시간표 조회</span>
+                <span role="cell"><span class="scope-badge scope-limited">조회 데모</span></span>
+              </div>
+              <div class="boundary-row" role="row">
+                <span role="cell"><strong>고속버스</strong><small>KOBUS</small></span>
+                <span role="cell">잔여석·임시 선점·결제 진입</span>
+                <span role="cell"><span class="scope-badge scope-demo">흐름 데모</span></span>
+              </div>
+              <div class="boundary-row" role="row">
+                <span role="cell"><strong>시외버스</strong><small>Tmoney</small></span>
+                <span role="cell">잔여석·임시 선점·결제 진입</span>
+                <span role="cell"><span class="scope-badge scope-demo">흐름 데모</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="privacy-banner">
+            <div class="privacy-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><path d="M8 14V9a8 8 0 0 1 16 0v5M6 14h20v15H6V14Zm10 6v4" /></svg>
+            </div>
+            <div>
+              <span class="section-kicker">PRIVACY FIRST</span>
+              <h3>이 데모는 개인정보를 받지 않아요</h3>
+              <p>검색·모니터 조건은 이 브라우저에만 저장되며, 전화번호·계정·카드 정보는 입력받거나 전송하지 않습니다.</p>
+            </div>
+            <button class="button button-outline" id="clear-local-data" type="button">내 데모 데이터 지우기</button>
+          </div>
+
+          <div class="faq-block">
+            <div class="faq-heading">
+              <span class="section-kicker">FAQ</span>
+              <h3>미리 알아두면 좋은 점</h3>
+            </div>
+            <div class="faq-list">
+              <details>
+                <summary>지금 실제 취소표를 잡아주나요?<span aria-hidden="true"></span></summary>
+                <p>아니요. 현재 공개 버전은 GitHub Pages에서 동작하는 프론트엔드 프로토타입입니다. 실제 모니터링·좌석 선점·알림톡에는 별도 백엔드와 공식 연동이 필요합니다.</p>
+              </details>
+              <details>
+                <summary>KTX도 자동으로 예약할 수 있나요?<span aria-hidden="true"></span></summary>
+                <p>참고한 railway-timetable 스킬은 코레일의 계획 시간표 조회만 제공하며 실시간 잔여석, 자동 재조회, 예약·선점은 지원하지 않습니다. 현재 화면도 이 제한을 그대로 표시합니다.</p>
+              </details>
+              <details>
+                <summary>좌석이 확보되면 예매가 끝난 건가요?<span aria-hidden="true"></span></summary>
+                <p>아닙니다. 버스 좌석의 임시 확보는 결제 전 단계이며 짧게 해제될 수 있습니다. 공식 결제 페이지에서 사용자가 직접 결제를 마쳐야 예매가 확정됩니다.</p>
+              </details>
+              <details>
+                <summary>왜 “10분 안에 결제”라고 표시하지 않나요?<span aria-hidden="true"></span></summary>
+                <p>공식 응답에서 정확한 만료 시각이 확인되지 않으면 임의의 카운트다운을 보여주지 않습니다. 실제 연동에서는 공급자가 반환한 만료 시각이 있을 때만 남은 시간을 표시합니다.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <div>
+          <a class="brand footer-brand" href="#top">
+            <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+            <span>자리<span class="brand-accent">ON</span></span>
+          </a>
+          <p>KTX &amp; 고속버스 예매 도우미 — 제품 콘셉트 프로토타입</p>
+        </div>
+        <div class="footer-links">
+          <span>공식 예매처</span>
+          <a href="https://www.letskorail.com" target="_blank" rel="noreferrer">코레일<span class="sr-only">(새 창)</span></a>
+          <a href="https://www.kobus.co.kr" target="_blank" rel="noreferrer">KOBUS<span class="sr-only">(새 창)</span></a>
+          <a href="https://intercitybus.tmoney.co.kr" target="_blank" rel="noreferrer">Tmoney 시외버스<span class="sr-only">(새 창)</span></a>
+        </div>
+        <div class="footer-note">
+          <p>본 서비스는 코레일·KOBUS·Tmoney와 제휴 또는 공식 지원 관계가 아닙니다.</p>
+          <p>제3자 상표는 호환 대상과 조회 범위를 설명하기 위해서만 사용됩니다.</p>
+        </div>
+      </div>
+    </footer>
+
+    <dialog class="monitor-dialog" id="monitor-dialog" aria-labelledby="dialog-title">
+      <form method="dialog" class="dialog-card" id="monitor-form">
+        <button class="dialog-close" type="button" id="dialog-close" aria-label="모달 닫기">
+          <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 5 10 10M15 5 5 15" /></svg>
+        </button>
+        <span class="section-kicker">SAVE CONDITION</span>
+        <h2 id="dialog-title">이 편을 지켜볼까요?</h2>
+        <p class="dialog-lead" id="dialog-lead">선택한 이동편을 모니터 조건으로 저장합니다.</p>
+
+        <div class="dialog-trip" id="dialog-trip"></div>
+
+        <div class="dialog-options">
+          <label class="option-row">
+            <input type="checkbox" id="include-nearby" checked />
+            <span class="custom-check" aria-hidden="true"></span>
+            <span><strong>앞뒤 30분 대체편도 함께 보기</strong><small>원하는 시간 주변의 후보도 놓치지 않아요.</small></span>
+          </label>
+          <label class="field-group" for="seat-preference">
+            <span>좌석 선호</span>
+            <select id="seat-preference">
+              <option value="any">좌석 위치 무관</option>
+              <option value="window">창가 우선</option>
+              <option value="aisle">통로 우선</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="dialog-warning" id="dialog-warning">
+          <svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" /><path d="M10 9v5m0-8v.2" /></svg>
+          <p><strong>이 버전은 실제 모니터링을 시작하지 않습니다.</strong> 저장 내용은 브라우저에만 남고, “빈자리 감지” 버튼으로 다음 상태를 체험할 수 있어요.</p>
+        </div>
+
+        <label class="acknowledge-row">
+          <input type="checkbox" id="payment-ack" required />
+          <span class="custom-check" aria-hidden="true"></span>
+          <span>결제 전에는 예매가 확정되지 않음을 확인했습니다.</span>
+        </label>
+
+        <div class="dialog-actions">
+          <button class="button button-secondary" type="button" id="dialog-cancel">취소</button>
+          <button class="button button-primary" type="submit" value="confirm">모니터링 데모 시작</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="result-dialog" id="result-dialog" aria-labelledby="result-dialog-title">
+      <div class="dialog-card result-dialog-card">
+        <button class="dialog-close" type="button" id="result-dialog-close" aria-label="모달 닫기">
+          <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 5 10 10M15 5 5 15" /></svg>
+        </button>
+        <div class="success-orbit" aria-hidden="true">
+          <span></span>
+          <svg viewBox="0 0 32 32"><path d="m8 16 5 5 11-11" /></svg>
+        </div>
+        <span class="section-kicker" id="result-dialog-kicker">DEMO EVENT</span>
+        <h2 id="result-dialog-title">빈자리를 감지했어요</h2>
+        <p id="result-dialog-copy">이 화면은 실제 좌석을 확보한 결과가 아닌 시뮬레이션입니다.</p>
+        <div class="result-dialog-trip" id="result-dialog-trip"></div>
+        <div class="dialog-warning dialog-warning-strong" id="result-dialog-warning"></div>
+        <div class="dialog-actions">
+          <button class="button button-secondary" type="button" id="result-dialog-dismiss">나중에</button>
+          <a class="button button-primary" id="official-link" href="#" target="_blank" rel="noreferrer">공식 사이트 열기</a>
+        </div>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>

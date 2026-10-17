@@ -1,0 +1,19 @@
+{
+  "name": "자리ON — KTX & 버스 예매 도우미",
+  "short_name": "자리ON",
+  "description": "KTX·고속버스·시외버스 예매 도우미 프로토타입",
+  "lang": "ko-KR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#081329",
+  "theme_color": "#101c3a",
+  "icons": [
+    {
+      "src": "./app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
