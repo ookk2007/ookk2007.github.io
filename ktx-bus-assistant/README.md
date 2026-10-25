@@ -14,7 +14,7 @@
 
 ### 자리ON 서비스 앱 — 독립 회원가입 베타
 
-- 주소: <https://jarion-booking-assistant.memorial-mapp.workers.dev>
+- 주소: <https://jarion-booking-assistant.h-app-y.workers.dev>
 - ChatGPT Sites와 분리된 이메일·비밀번호 회원가입과 서버 세션을 사용합니다.
 - Cloudflare Worker와 사용자 소유 D1에서 프런트엔드, 인증 API, 계정별 데이터를 같은 Origin으로 제공합니다.
 - D1에 사용자별 프로필, 알림 연락처, 모니터링 조건과 상태 이력을 분리해 저장합니다.
