@@ -2487,7 +2487,7 @@ dialog[open] {
 
 .dialog-options {
   display: grid;
-  grid-template-columns: 1.35fr 0.8fr;
+  grid-template-columns: 1fr;
   gap: 14px;
   align-items: end;
   margin-top: 20px;
@@ -2509,6 +2509,11 @@ dialog[open] {
   border: 1px solid #e1e5ed;
   border-radius: 12px;
 }
+
+.train-type-field { margin-bottom: 18px; }
+.train-type-field[hidden] { display: none; }
+.next-day-button { width: 100%; margin-top: 20px; }
+.option-row input[type="radio"] + .custom-check { border-radius: 50%; }
 
 .option-row input,
 .acknowledge-row input {
