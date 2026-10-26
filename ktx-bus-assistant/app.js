@@ -9,7 +9,7 @@
       shortLabel: "철도",
       provider: "Korail",
       officialUrl: "https://www.letskorail.com",
-      source: "코레일 공개 계획 시간표를 바탕으로 만든 KTX 예시 데이터",
+      source: "선택 흐름 체험용 가상 시간표 (실제 운행정보 아님)",
       stations: ["서울", "광명", "천안아산", "대전", "동대구", "부산", "용산", "전주", "광주송정", "목포"],
       defaults: ["서울", "부산"],
       noticeTitle: "공개 데모는 KTX 예시 시간표를 보여줘요.",
@@ -54,6 +54,18 @@
     },
   };
 
+  // All rows are fictional. A route change does not query a transport operator.
+  const trainKinds = [["KTX", "KTX"], ["ITX_MAUM", "ITX-마음"], ["ITX_SAEMAEUL", "ITX-새마을"], ["SAEMAEUL", "새마을호"], ["MUGUNGHWA", "무궁화호"], ["NURIRO", "누리로"], ["ITX_CHEONGCHUN", "ITX-청춘"], ["TOURIST", "S-Train"]];
+  MODES.rail.schedules = trainKinds.flatMap(([trainType, label]) => ["00:10", "05:30", "08:00", "08:20", "12:00", "15:30", "18:00", "20:30", "23:50"].map((time, index) => ({
+    id: `demo-${trainType}-${index}`, trainType, time, arrival: time,
+    service: `${label} 예시 ${index + 1}`, detail: "가상 운행편 · 도착시각 미제공", price: "운임·잔여석 미확인", status: "schedule-only",
+  })));
+  MODES.rail.noticeTitle = "실제 운행정보가 아닌 가상 시간표입니다.";
+  MODES.rail.noticeCopy = "선택 흐름을 체험할 수 있도록 모든 구간에 동일한 예시 편을 표시합니다. 실제 시간표·잔여석 조회·예매는 실행되지 않습니다.";
+  for (const mode of ["express", "intercity"]) {
+    MODES[mode].schedules.unshift({ id: `demo-${mode}-first`, time: "05:30", arrival: "08:00", service: "첫차 예시", detail: "가상 운행편", price: "운임·잔여석 미확인", status: "schedule-only" });
+  }
+
   const state = {
     mode: "rail",
     search: null,
@@ -74,7 +86,10 @@
     date: document.querySelector("#travel-date"),
     heroTicketDate: document.querySelector("#hero-ticket-date"),
     timeStart: document.querySelector("#time-start"),
-    timeEnd: document.querySelector("#time-end"),
+    trainType: document.querySelector("#train-type"),
+    trainTypeField: document.querySelector("#train-type-field"),
+    nextDay: document.querySelector("#next-day"),
+    exactService: document.querySelector("#exact-service"),
     passengers: document.querySelector("#passengers"),
     swap: document.querySelector("#swap-route"),
     formError: document.querySelector("#form-error"),
@@ -116,8 +131,21 @@
   function init() {
     setInitialDate();
     populateStations("rail");
+    updateNotice("rail");
     bindEvents();
     renderMonitors();
+    window.setInterval(removeExpiredMonitors, 30000);
+    removeExpiredMonitors();
+  }
+
+  function removeExpiredMonitors() {
+    const before = state.monitors.length;
+    state.monitors = state.monitors.filter((row) => {
+      const departure = new Date(`${row.date}T${row.time}:00+09:00`).getTime();
+      const endOfDay = new Date(`${row.date}T23:59:00+09:00`).getTime();
+      return Math.min(departure + (row.includeNearby ? 30 * 60000 : 0), endOfDay) > Date.now();
+    });
+    if (before !== state.monitors.length) { persistMonitors(); renderMonitors(); }
   }
 
   function bindEvents() {
@@ -128,6 +156,13 @@
 
     elements.swap.addEventListener("click", swapRoute);
     elements.form.addEventListener("submit", handleSearch);
+    elements.form.addEventListener("input", invalidateSearch);
+    elements.nextDay.addEventListener("click", () => {
+      if (!state.search) return;
+      elements.date.value = nextDate(state.search.date);
+      elements.timeStart.value = "00:00";
+      elements.form.requestSubmit();
+    });
     elements.resultList.addEventListener("click", handleResultAction);
     elements.monitorList.addEventListener("click", handleMonitorAction);
     elements.monitorForm.addEventListener("submit", saveMonitor);
@@ -153,23 +188,36 @@
 
   function setInitialDate() {
     const now = new Date();
-    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
     elements.date.min = toISODate(now);
-    elements.date.value = toISODate(tomorrow);
-    elements.heroTicketDate.textContent = formatDate(toISODate(tomorrow));
+    elements.date.max = "2200-12-31";
+    elements.date.value = nextDate(toISODate(now));
+    elements.heroTicketDate.textContent = formatDate(elements.date.value);
   }
 
   function toISODate(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
+  }
+
+  function nextDate(date) {
+    const next = new Date(`${date}T00:00:00Z`);
+    next.setUTCDate(next.getUTCDate() + 1);
+    return next.toISOString().slice(0, 10);
+  }
+
+  function invalidateSearch() {
+    state.searchRequestId++;
+    state.search = null;
+    state.selectedSchedule = null;
+    elements.resultsPanel.hidden = true;
+    resetSearchButton();
   }
 
   function setMode(mode) {
     if (!MODES[mode]) return;
     state.searchRequestId += 1;
     state.mode = mode;
+    state.search = null;
+    elements.trainTypeField.hidden = mode !== "rail";
     elements.tabs.forEach((tab) => {
       const isActive = tab.dataset.mode === mode;
       tab.classList.toggle("is-active", isActive);
@@ -200,8 +248,7 @@
   function populateStations(mode) {
     const config = MODES[mode];
     const options = config.stations.map((station) => `<option value="${escapeHtml(station)}">${escapeHtml(station)}</option>`).join("");
-    elements.departure.innerHTML = options;
-    elements.arrival.innerHTML = options;
+    document.querySelector("#station-options").innerHTML = options;
     elements.departure.value = config.defaults[0];
     elements.arrival.value = config.defaults[1];
   }
@@ -222,6 +269,7 @@
     const departure = elements.departure.value;
     elements.departure.value = elements.arrival.value;
     elements.arrival.value = departure;
+    invalidateSearch();
   }
 
   function handleSearch(event) {
@@ -231,21 +279,21 @@
     if (!elements.date.value) {
       return showError("가는 날을 선택해 주세요.");
     }
-    if (elements.departure.value === elements.arrival.value) {
+    if (!elements.departure.value.trim() || !elements.arrival.value.trim() || elements.departure.value.trim() === elements.arrival.value.trim()) {
       return showError("출발지와 도착지는 서로 달라야 해요.");
     }
-    if (elements.timeStart.value >= elements.timeEnd.value) {
-      return showError("종료 시간은 시작 시간보다 늦어야 해요.");
+    if (elements.date.value < toISODate(new Date())) {
+      return showError("지난 날짜는 조회할 수 없어요.");
     }
 
     const requestId = ++state.searchRequestId;
     state.search = {
       mode: state.mode,
-      departure: elements.departure.value,
-      arrival: elements.arrival.value,
+      departure: elements.departure.value.trim(),
+      arrival: elements.arrival.value.trim(),
       date: elements.date.value,
       timeStart: elements.timeStart.value,
-      timeEnd: elements.timeEnd.value,
+      trainType: state.mode === "rail" ? elements.trainType.value : null,
       passengers: Number(elements.passengers.value),
     };
 
@@ -263,21 +311,25 @@
   function renderResults() {
     const search = state.search;
     const config = MODES[search.mode];
-    const schedules = config.schedules.filter((schedule) => schedule.time >= search.timeStart && schedule.time <= search.timeEnd);
+    const schedules = config.schedules.filter((schedule) => schedule.time >= search.timeStart &&
+      (search.mode !== "rail" || search.trainType === "ALL" || schedule.trainType === search.trainType) &&
+      new Date(`${search.date}T${schedule.time}:00+09:00`).getTime() > Date.now())
+      .sort((a, b) => a.time.localeCompare(b.time) || a.id.localeCompare(b.id));
+    elements.nextDay.disabled = search.date >= "2200-12-31";
 
     elements.resultSummary.innerHTML = `
       <strong>${escapeHtml(search.departure)} → ${escapeHtml(search.arrival)}</strong>
       <span>·</span>
       <span>${formatDate(search.date)}</span>
       <span>·</span>
-      <span>${escapeHtml(search.timeStart)}–${escapeHtml(search.timeEnd)}</span>
+      <span>${escapeHtml(search.timeStart)}부터 당일 마지막 편까지 (한국시간)</span>
       <span>·</span>
       <span>${search.passengers}명</span>
     `;
     elements.resultUpdated.textContent = `${formatClock(new Date())} 업데이트`;
     elements.resultList.innerHTML = schedules.length
       ? schedules.map((schedule) => resultCard(schedule, search, config)).join("")
-      : `<div class="no-results"><strong>선택한 시간대의 데모 편이 없어요.</strong><span>시간 범위를 넓히거나 다른 시간대로 다시 찾아보세요.</span></div>`;
+      : `<div class="no-results"><strong>해당 시간 이후의 예시 편이 없어요.</strong><span>아래에서 다음날 시간표를 조회해 주세요.</span></div>`;
     elements.resultList.insertAdjacentHTML(
       "beforeend",
       `<span class="result-source">출처 표기: ${escapeHtml(config.source)} · 모든 결과는 실제 조회가 아닌 화면 체험용입니다.</span>`,
@@ -306,21 +358,19 @@
     const isRail = search.mode === "rail";
     const isAvailable = schedule.status === "available";
     const statusLabel = isRail
-      ? "계획 시간표 · 좌석 조회 미지원"
+      ? "가상 시간표 · 좌석 조회 미지원"
       : isAvailable
         ? `잔여 ${schedule.seats}석 · 예시`
-        : "잔여 0석 · 모니터링 대상";
+        : schedule.status === "schedule-only" ? "좌석 미확인 · 예시" : "잔여 0석 · 예시";
     const statusClass = isRail ? "info" : isAvailable ? "available" : "sold";
-    const action = isAvailable
-      ? `<a class="result-action is-official" href="${config.officialUrl}" target="_blank" rel="noreferrer">공식 사이트에서 확인<span class="sr-only">(새 창)</span></a>`
-      : `<button class="result-action" type="button" data-action="monitor" data-schedule-id="${schedule.id}">${isRail ? "조건 저장 (데모)" : "이 편 모니터링"}</button>`;
+    const action = `<button class="result-action" type="button" data-action="monitor" data-schedule-id="${schedule.id}">이 편 선택 (데모)</button>`;
 
     return `
       <article class="result-card is-${schedule.status}">
         <div class="result-time">
           <strong>${escapeHtml(schedule.time)}</strong>
           <span class="time-arrow" aria-hidden="true">→</span>
-          <span>${escapeHtml(schedule.arrival)}</span>
+          <span>${isRail ? "—" : escapeHtml(schedule.arrival)}</span>
         </div>
         <div class="result-service">
           <strong>${escapeHtml(schedule.service)}</strong>
@@ -354,7 +404,8 @@
       ? "실시간 감시가 아닌 코레일 열차 화면 체험용 조건으로 저장됩니다."
       : "실제 좌석 조회 없이 선택한 편을 화면 체험용 조건으로 저장합니다.";
     elements.dialogTrip.innerHTML = tripMarkup(search, schedule, config);
-    elements.includeNearby.checked = true;
+    elements.exactService.checked = true;
+    elements.includeNearby.checked = false;
     elements.seatPreference.value = "any";
     elements.paymentAck.checked = false;
     showDialog(elements.monitorDialog);
@@ -378,6 +429,12 @@
 
     const search = state.search;
     const schedule = state.selectedSchedule;
+    if (new Date(`${search.date}T${schedule.time}:00+09:00`).getTime() <= Date.now()) {
+      closeMonitorDialog();
+      showToast("이미 출발한 편입니다. 다시 조회해 주세요.");
+      renderResults();
+      return;
+    }
     const duplicate = state.monitors.find(
       (monitor) => monitor.mode === search.mode && monitor.date === search.date && monitor.departure === search.departure && monitor.arrival === search.arrival && monitor.scheduleId === schedule.id,
     );
@@ -471,12 +528,12 @@
         <div class="monitor-route">
           <div class="monitor-route-point"><strong>${escapeHtml(monitor.departure)}</strong><span>${escapeHtml(monitor.time)}</span></div>
           <div class="monitor-route-line" aria-hidden="true"><span></span></div>
-          <div class="monitor-route-point"><strong>${escapeHtml(monitor.arrival)}</strong><span>${escapeHtml(monitor.arrivalTime)}</span></div>
+          <div class="monitor-route-point"><strong>${escapeHtml(monitor.arrival)}</strong><span>${isRail ? "도착시각 미제공" : escapeHtml(monitor.arrivalTime)}</span></div>
         </div>
         <dl class="monitor-meta">
           <div><dt>현재 상태</dt><dd>${actionRequired ? "공식 사이트 확인 필요" : monitor.status === "paused" ? "확인 중지됨" : "브라우저 데모 대기"}</dd></div>
           <div><dt>최근 확인</dt><dd>${formatRelative(monitor.lastCheckedAt)}</dd></div>
-          <div><dt>조건</dt><dd>${monitor.includeNearby ? "앞뒤 30분 포함" : "선택편만"} · ${monitor.passengers}명</dd></div>
+          <div><dt>조건</dt><dd>${monitor.includeNearby ? "같은 날·열차종 앞뒤 30분" : "선택편만"} · ${monitor.passengers}명 · ${{any: "좌석 무관", window: "창가 선호", aisle: "통로 선호"}[monitor.seatPreference]}</dd></div>
         </dl>
         <div class="monitor-card-actions">
           ${primaryAction}
