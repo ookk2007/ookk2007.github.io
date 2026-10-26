@@ -224,10 +224,19 @@
               </div>
 
               <form class="journey-form" id="journey-form">
+                <label class="field-group train-type-field" id="train-type-field" for="train-type">
+                  <span>열차종</span>
+                  <select id="train-type" name="trainType">
+                    <option value="ALL">전체 열차</option><option value="KTX">KTX</option>
+                    <option value="ITX_MAUM">ITX-마음</option><option value="ITX_SAEMAEUL">ITX-새마을</option>
+                    <option value="SAEMAEUL">새마을호</option><option value="MUGUNGHWA">무궁화호</option>
+                    <option value="NURIRO">누리로</option><option value="ITX_CHEONGCHUN">ITX-청춘</option><option value="TOURIST">관광열차 (S-Train 예시)</option>
+                  </select>
+                </label>
                 <div class="route-fields">
                   <label class="field-group" for="departure">
                     <span>출발지</span>
-                    <select id="departure" name="departure"></select>
+                    <input id="departure" name="departure" list="station-options" required maxlength="80" autocomplete="off" />
                   </label>
 
                   <button class="swap-button" id="swap-route" type="button" aria-label="출발지와 도착지 바꾸기" title="출발지와 도착지 바꾸기">
@@ -236,42 +245,20 @@
 
                   <label class="field-group" for="arrival">
                     <span>도착지</span>
-                    <select id="arrival" name="arrival"></select>
+                    <input id="arrival" name="arrival" list="station-options" required maxlength="80" autocomplete="off" />
                   </label>
                 </div>
 
+                <datalist id="station-options"></datalist>
                 <div class="detail-fields">
                   <label class="field-group" for="travel-date">
                     <span>가는 날</span>
                     <input id="travel-date" name="travelDate" type="date" required />
                   </label>
-                  <fieldset class="time-range">
-                    <legend>희망 출발 시간</legend>
-                    <label for="time-start">
-                      <span class="sr-only">시작 시간</span>
-                      <select id="time-start" name="timeStart">
-                        <option value="05:00">05:00</option>
-                        <option value="07:00">07:00</option>
-                        <option value="09:00">09:00</option>
-                        <option value="12:00">12:00</option>
-                        <option value="15:00" selected>15:00</option>
-                        <option value="18:00">18:00</option>
-                        <option value="20:00">20:00</option>
-                      </select>
-                    </label>
-                    <span class="range-dash" aria-hidden="true">–</span>
-                    <label for="time-end">
-                      <span class="sr-only">종료 시간</span>
-                      <select id="time-end" name="timeEnd">
-                        <option value="09:00">09:00</option>
-                        <option value="12:00">12:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="18:00">18:00</option>
-                        <option value="21:00" selected>21:00</option>
-                        <option value="23:59">23:59</option>
-                      </select>
-                    </label>
-                  </fieldset>
+                  <label class="field-group" for="time-start">
+                    <span>검색 시작 시간 (~시부터)</span>
+                    <input id="time-start" name="timeStart" type="time" value="15:00" required />
+                  </label>
                   <label class="field-group" for="passengers">
                     <span>인원</span>
                     <select id="passengers" name="passengers">
@@ -304,6 +291,7 @@
             </div>
             <div class="result-summary" id="result-summary"></div>
             <div class="result-list" id="result-list" aria-live="polite"></div>
+            <button class="button button-secondary next-day-button" id="next-day" type="button">다음날 시간표 조회</button>
           </section>
         </div>
       </section>
@@ -509,9 +497,14 @@
 
         <div class="dialog-options">
           <label class="option-row">
-            <input type="checkbox" id="include-nearby" checked />
+            <input type="radio" name="monitor-scope" id="exact-service" checked />
             <span class="custom-check" aria-hidden="true"></span>
-            <span><strong>앞뒤 30분 대체편도 함께 보기</strong><small>원하는 시간 주변의 후보도 놓치지 않아요.</small></span>
+            <span><strong>선택한 출발편만 (기본)</strong><small>같은 시각의 다른 편은 포함하지 않아요.</small></span>
+          </label>
+          <label class="option-row">
+            <input type="radio" name="monitor-scope" id="include-nearby" />
+            <span class="custom-check" aria-hidden="true"></span>
+            <span><strong>앞뒤 30분 대체편도 함께 보기</strong><small>같은 출발일·구간·열차종만 포함하며 다음 날로 넘어가지 않아요.</small></span>
           </label>
           <label class="field-group" for="seat-preference">
             <span>좌석 선호</span>
